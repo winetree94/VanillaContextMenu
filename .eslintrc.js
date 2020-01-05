@@ -13,11 +13,6 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
   },
-  settings: {
-    react: {
-      pragma: 'h',
-    }
-  },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     parser: 'typescript-eslint-parser'
