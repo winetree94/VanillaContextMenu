@@ -20,5 +20,6 @@ module.exports = {
     'prettier', '@typescript-eslint'
   ],
   rules: {
+    quotes: ['error', 'single']
   }
 }
