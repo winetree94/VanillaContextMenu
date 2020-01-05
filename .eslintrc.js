@@ -6,7 +6,6 @@ module.exports = {
   extends: [
     'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint',
-    'plugin:react/recommended',
     'plugin:prettier/recommended'
   ],
   globals: {
@@ -18,7 +17,7 @@ module.exports = {
     parser: 'typescript-eslint-parser'
   },
   plugins: [
-    'prettier', 'react', '@typescript-eslint'
+    'prettier', '@typescript-eslint'
   ],
   rules: {
   }
