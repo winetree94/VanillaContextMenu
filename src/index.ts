@@ -1,13 +1,8 @@
 import { Request } from './http/Client';
 import { VElement, render } from './dom/ElementProvider';
-import { Comp } from './Comp';
+import './components/WineCanvas';
+import './components/SaySomething';
 
-class App extends VElement {
-  tag = 'div';
-  children = [Comp, Comp, Comp];
-  style = {};
-}
+// render(App, document.body);
 
-console.log(App);
-
-render(App, document.body);
+document.body.innerHTML = '<wine-canvas></wine-canvas><say-something></say-something>';

@@ -18,10 +18,24 @@ export abstract class VElement implements VElementOptions {
   public attributes?: { [key: string]: string };
   public children: VElementContructor[] = [];
 
+  private dom = '';
+
+  public abstract render(): HTMLElement;
+
   private watcher = (): null => {
     return null;
   };
+
+  public create(): void {
+    const element = document.createElement(this.tag);
+  }
 }
+
+function createElement(
+  tag: string,
+  options?: object,
+  ...children: VElement[]
+): void {}
 
 interface VElementContructor {
   new (): VElement;
