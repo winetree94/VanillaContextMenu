@@ -6,7 +6,10 @@ import { LayoutLocation } from './Layout';
 export class VanillaContextItem {
   public static ClassList = {
     default: 'vanilla-context-li',
-    hover: 'vanilla-context-li-hover'
+    hover: 'vanilla-context-li-hover',
+    text: 'vanilla-context-text-container',
+    icon: 'vanilla-context-icon-container',
+    image: 'vanilla-context-icon'
   };
 
   public group: VanillaContextGroup;
@@ -19,17 +22,32 @@ export class VanillaContextItem {
     this.group = group;
     this.node = node;
     this.layout.classList.add(VanillaContextItem.ClassList.default);
-    this.setRenderer(node.renderer);
     this.setChild(node.children);
+    this.setRenderer(node.renderer);
     this.setEventListener();
   }
 
   setRenderer(renderer: () => string | HTMLElement): void {
     const rendered = renderer();
+    const textContainer = document.createElement('div');
+    textContainer.classList.add(VanillaContextItem.ClassList.text);
     if (rendered instanceof HTMLElement) {
-      this.layout.appendChild(rendered);
+      textContainer.appendChild(rendered);
     } else {
-      this.layout.innerHTML = rendered;
+      textContainer.innerHTML = rendered;
+    }
+    this.layout.append(textContainer);
+    if (this.child) {
+      const iconContainer = document.createElement('div');
+      iconContainer.classList.add(VanillaContextItem.ClassList.icon);
+      const icon = document.createElement('img');
+      icon.classList.add(VanillaContextItem.ClassList.image);
+      icon.setAttribute(
+        'src',
+        'http://cdn.onlinewebfonts.com/svg/img_414447.png'
+      );
+      iconContainer.appendChild(icon);
+      this.layout.appendChild(iconContainer);
     }
     const inputs = this.layout.querySelectorAll('input, button, i');
     inputs.forEach(input => {

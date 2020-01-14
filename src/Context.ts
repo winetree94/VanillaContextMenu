@@ -22,8 +22,13 @@ export class VanillaContext {
 
   onContextRequest(e: HTMLElementEventMap['contextmenu']): void {
     e.preventDefault();
-    this.removeOldContext();
-    this.showContext(e);
+    if (e.target) {
+      const isContain = this.contextGroup.layout.contains(e.target as Node);
+      if (!isContain) {
+        this.removeOldContext();
+        this.showContext(e);
+      }
+    }
   }
 
   onWindowClick(e: Event): void {
