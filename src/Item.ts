@@ -114,11 +114,15 @@ export class VanillaContextItem {
   }
 
   show(): void {
-    this.child?.show();
+    if (this.child) {
+      this.child.show();
+    }
   }
 
   hide(): void {
-    this.child?.hide();
+    if (this.child) {
+      this.child.hide();
+    }
   }
 
   onClick(e: Event): void {

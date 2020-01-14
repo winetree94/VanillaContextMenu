@@ -1,49 +1,71 @@
 import { VanillaContextGroup } from './Group';
 import { VanillaContextNode } from './Node';
 import { LayoutLocation } from './Layout';
+import { VanillaEventContainer } from './Event';
 
 export class VanillaContext {
-  public contextGroup: VanillaContextGroup;
   public element: HTMLElement;
-  public nodes: VanillaContextNode[] = [];
+  public eventContainer: VanillaEventContainer = new VanillaEventContainer();
+  public getContextData: (e: Event) => VanillaContextNode[];
+  public contextGroup: VanillaContextGroup | undefined;
 
-  constructor(element: HTMLElement, nodes: VanillaContextNode[]) {
+  constructor(
+    element: HTMLElement,
+    getContextData: (e: Event) => VanillaContextNode[]
+  ) {
     this.element = element;
-    this.nodes = nodes;
-    this.contextGroup = new VanillaContextGroup(nodes);
     this.setListener(element);
+    this.getContextData = getContextData;
   }
 
   setListener(element: HTMLElement): void {
-    document.addEventListener('click', this.onWindowClick.bind(this));
-    element.addEventListener('contextmenu', this.onContextRequest.bind(this));
+    this.eventContainer.add(
+      {
+        element: (document as unknown) as HTMLElement,
+        event: 'click',
+        listener: this.onWindowClick.bind(this)
+      },
+      {
+        element: element,
+        event: 'contextmenu',
+        listener: this.onContextRequest.bind(this)
+      }
+    );
   }
 
-  private onContextRequest(e: HTMLElementEventMap['contextmenu']): void {
-    e.preventDefault();
+  private onContextRequest(e: Event): void {
     if (e.target) {
-      const isContain = this.contextGroup.layout.contains(e.target as Node);
-      if (!isContain) {
-        this.removeOldContext();
-        this.showContext(e);
+      e.preventDefault();
+      if (
+        this.contextGroup &&
+        this.contextGroup.layout.contains(e.target as Node)
+      ) {
+        return;
       }
+      this.removeOldContext();
+      this.showContext(e);
     }
   }
 
   private onWindowClick(e: Event): void {
     if (e.target) {
-      const isContain = this.contextGroup.layout.contains(e.target as Node);
-      if (!isContain) {
-        this.removeOldContext();
+      if (
+        this.contextGroup &&
+        this.contextGroup.layout.contains(e.target as Node)
+      ) {
+        return;
       }
+      this.removeOldContext();
     }
   }
 
-  private showContext(e: HTMLElementEventMap['contextmenu']): void {
-    this.contextGroup = new VanillaContextGroup(this.nodes);
+  private showContext(e: Event): void {
+    this.contextGroup = new VanillaContextGroup(this.getContextData(e));
     this.element.appendChild(this.contextGroup.layout);
-    this.contextGroup.layout.style.top = VanillaContext.getMousePosition(e).y + 'px';
-    this.contextGroup.layout.style.left = VanillaContext.getMousePosition(e).x + 'px';
+    this.contextGroup.layout.style.top =
+      VanillaContext.getMousePosition(e).y + 'px';
+    this.contextGroup.layout.style.left =
+      VanillaContext.getMousePosition(e).x + 'px';
     this.contextGroup.show();
   }
 
@@ -61,9 +83,12 @@ export class VanillaContext {
     this.removeOldContext();
   }
 
-  private static getMousePosition(
-    e: HTMLElementEventMap['contextmenu']
-  ): LayoutLocation {
+  public destroy(): void {
+    this.eventContainer.destroy();
+  }
+
+  private static getMousePosition(event: Event): LayoutLocation {
+    const e = event as HTMLElementEventMap['contextmenu'];
     let posx = 0;
     let posy = 0;
 

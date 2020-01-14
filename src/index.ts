@@ -56,7 +56,7 @@ const data: VanillaContextNode[] = [
           const button = document.createElement('button');
           button.setAttribute('type', 'button');
           button.setAttribute('value', 'button');
-          button.addEventListener('click', (e) => {
+          button.addEventListener('click', e => {
             console.log('눌렀넹');
           });
           return button;
@@ -72,4 +72,6 @@ const data: VanillaContextNode[] = [
   }
 ];
 
-const context = new VanillaContext(document.body, data);
+const context = new VanillaContext(document.body, (e: Event) => {
+  return data;
+});
