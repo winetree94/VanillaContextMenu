@@ -20,9 +20,8 @@
   display: block;
 }
 
-
 .vanilla-context-li {
-  position: relative;
+  padding: 8px 10px;
 }
 
 .vanilla-context-li-hover {

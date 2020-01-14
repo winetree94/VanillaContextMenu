@@ -24,6 +24,34 @@ interface VanillaEventNode {
   listener: (e: Event) => void;
 }
 
+class VanillaEventContainer {
+  public nodes: VanillaEventNode[] = [];
+
+  public add(node: VanillaEventNode) {
+    this.nodes.push(node);
+  }
+
+  public remove(node: VanillaEventNode) {
+    const idx = this.nodes.indexOf(node);
+    if (idx >= 0) {
+      this.invalidate(this.nodes[idx]);
+      this.nodes.splice(idx, 1);
+    } else {
+      throw new Error('No matched event node');
+    }
+  }
+
+  public destroy() {
+    this.nodes.forEach(({ element, event, listener }) => {
+      element.removeEventListener(event, listener);
+    });
+  }
+
+  private invalidate(node: VanillaEventNode) {
+    node.element.removeEventListener(node.event, node.listener);
+  }
+}
+
 interface VanillaLayout {
   getLayout: () => HTMLElement;
   setRenderer: () => void;
@@ -55,6 +83,7 @@ class VanillaContextItem {
     } else {
       this.layout.innerHTML = rendered;
     }
+    const inputs = this.layout.querySelectorAll('input, button, i');
   }
 
   setChild(nodes: VanillaContextNode[] | undefined): void {
@@ -236,7 +265,18 @@ const data: VanillaContextNode[] = [
             renderer: (): string => 'ㅋㅋ'
           },
           {
-            renderer: (): string => 'ㅋㅋ'
+            renderer: (): string => 'ㅋㅋ',
+            children: [
+              {
+                renderer: (): string => 'ㅋㅋ'
+              },
+              {
+                renderer: (): string => 'ㅋㅋ'
+              },
+              {
+                renderer: (): string => 'ㅋㅋ'
+              }
+            ]
           }
         ]
       }
@@ -246,7 +286,7 @@ const data: VanillaContextNode[] = [
     renderer: (): string => '안녕',
     children: [
       {
-        renderer: (): string => 'ㅋㅋ'
+        renderer: (): string => '<input type="button" value="버튼임">'
       },
       {
         renderer: (): string => 'ㅋㅋ'
