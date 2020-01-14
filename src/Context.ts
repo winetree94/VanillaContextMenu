@@ -3,11 +3,16 @@ import { VanillaContextNode } from './Node';
 import { LayoutLocation } from './Layout';
 import { VanillaEventContainer } from './Event';
 
-export class VanillaContext {
+export interface VanillaContextOptions {
+  getContextNodes: (e: Event) => VanillaContextNode[];
+}
+
+export class VanillaContext implements VanillaContextOptions {
   public element: HTMLElement;
   public eventContainer: VanillaEventContainer = new VanillaEventContainer();
-  public getContextData: (e: Event) => VanillaContextNode[];
+  public getContextNodes: (e: Event) => VanillaContextNode[];
   public contextGroup: VanillaContextGroup | undefined;
+  static Holder:VanillaContext[] = [];
 
   constructor(
     element: HTMLElement,
@@ -15,7 +20,8 @@ export class VanillaContext {
   ) {
     this.element = element;
     this.setListener(element);
-    this.getContextData = getContextData;
+    this.getContextNodes = getContextData;
+    VanillaContext.Holder.push(this);
   }
 
   setListener(element: HTMLElement): void {
@@ -34,6 +40,11 @@ export class VanillaContext {
   }
 
   private onContextRequest(e: Event): void {
+    VanillaContext.Holder.forEach((context) => {
+      if (context !== this) {
+        context.close();
+      }
+    });
     if (e.target) {
       e.preventDefault();
       if (
@@ -60,7 +71,7 @@ export class VanillaContext {
   }
 
   private showContext(e: Event): void {
-    this.contextGroup = new VanillaContextGroup(this.getContextData(e));
+    this.contextGroup = new VanillaContextGroup(this.getContextNodes(e));
     this.element.appendChild(this.contextGroup.layout);
     this.contextGroup.layout.style.top =
       VanillaContext.getMousePosition(e).y + 'px';
@@ -84,7 +95,12 @@ export class VanillaContext {
   }
 
   public destroy(): void {
+    if (this.contextGroup) {
+      this.contextGroup.destroy();
+    }
     this.eventContainer.destroy();
+    const idx = VanillaContext.Holder.indexOf(this);
+    VanillaContext.Holder.splice(idx, 1);
   }
 
   private static getMousePosition(event: Event): LayoutLocation {
