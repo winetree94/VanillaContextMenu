@@ -2,7 +2,8 @@ import { Request } from './http/Client';
 import { VElement, render } from './dom/ElementProvider';
 import './components/WineCanvas';
 import './components/SaySomething';
+import './dom/Context';
 
 // render(App, document.body);
 
-document.body.innerHTML = '<wine-canvas></wine-canvas><say-something></say-something>';
+// document.body.innerHTML = '<wine-canvas></wine-canvas><say-something></say-something>';
