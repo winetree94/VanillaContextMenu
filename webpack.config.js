@@ -1,9 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.ts',
+  entry: './src/entry.ts',
   module: {
     rules: [
       {
@@ -13,7 +16,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       }
     ]
   },
@@ -21,15 +24,24 @@ module.exports = {
     extensions: ['.ts', '.js']
   },
   output: {
+    library: 'VanillaContext',
+    libraryTarget: 'umd',
     path: path.join(__dirname, './dist'),
-    filename: 'bundle.[hash].js'
+    filename: 'vanilla-context.min.js'
   },
   devServer: {
     port: 9009
   },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})]
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'public/index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'vanilla-context.min.css'
     })
   ]
 };
