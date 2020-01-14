@@ -11,7 +11,6 @@ export class VanillaContext {
     this.element = element;
     this.nodes = nodes;
     this.contextGroup = new VanillaContextGroup(nodes);
-    element.appendChild(this.contextGroup.layout);
     this.setListener(element);
   }
 
@@ -20,7 +19,7 @@ export class VanillaContext {
     element.addEventListener('contextmenu', this.onContextRequest.bind(this));
   }
 
-  onContextRequest(e: HTMLElementEventMap['contextmenu']): void {
+  private onContextRequest(e: HTMLElementEventMap['contextmenu']): void {
     e.preventDefault();
     if (e.target) {
       const isContain = this.contextGroup.layout.contains(e.target as Node);
@@ -31,7 +30,7 @@ export class VanillaContext {
     }
   }
 
-  onWindowClick(e: Event): void {
+  private onWindowClick(e: Event): void {
     if (e.target) {
       const isContain = this.contextGroup.layout.contains(e.target as Node);
       if (!isContain) {
@@ -40,15 +39,15 @@ export class VanillaContext {
     }
   }
 
-  showContext(e: HTMLElementEventMap['contextmenu']): void {
+  private showContext(e: HTMLElementEventMap['contextmenu']): void {
     this.contextGroup = new VanillaContextGroup(this.nodes);
     this.element.appendChild(this.contextGroup.layout);
-    this.contextGroup.layout.style.top = this.getMousePosition(e).y + 'px';
-    this.contextGroup.layout.style.left = this.getMousePosition(e).x + 'px';
+    this.contextGroup.layout.style.top = VanillaContext.getMousePosition(e).y + 'px';
+    this.contextGroup.layout.style.left = VanillaContext.getMousePosition(e).x + 'px';
     this.contextGroup.show();
   }
 
-  removeOldContext(): void {
+  private removeOldContext(): void {
     if (this.contextGroup) {
       this.contextGroup.destroy();
       const parent = this.contextGroup.layout.parentElement;
@@ -58,7 +57,13 @@ export class VanillaContext {
     }
   }
 
-  getMousePosition(e: HTMLElementEventMap['contextmenu']): LayoutLocation {
+  public close(): void {
+    this.removeOldContext();
+  }
+
+  private static getMousePosition(
+    e: HTMLElementEventMap['contextmenu']
+  ): LayoutLocation {
     let posx = 0;
     let posy = 0;
 
