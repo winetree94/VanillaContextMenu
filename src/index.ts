@@ -15,7 +15,6 @@ const data: VanillaContextNode[] = [
         renderer: (): string => 'ㅋㅋ',
         onClick: (e: Event) => {
           console.log('눌렀네');
-          context.close();
         }
       },
       {
