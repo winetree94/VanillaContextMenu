@@ -38,6 +38,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      inject : 'head',
       template: 'public/index.html'
     }),
     new MiniCssExtractPlugin({
