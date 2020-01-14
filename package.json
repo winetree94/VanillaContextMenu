@@ -1,10 +1,11 @@
 {
-  "name": "wine-grid",
+  "name": "vanilla-context",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Pure javascript context menu library",
+  "main": "src/index.ts",
   "author": "winetree94",
-  "license": "ISC",
+  "license": "MIT",
+  "repository" : "https://github.com/winetree94/VanillaContextMenu",
   "scripts": {
     "build": "webpack -p",
     "debug": "webpack-dev-server",
