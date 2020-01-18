@@ -25,7 +25,7 @@ export class VanillaEventContainer {
   }
 
   public destroy(): void {
-    this.nodes.forEach(this.remove);
+    this.nodes.forEach(this.remove.bind(this));
   }
 
   private static invalidate(node: VanillaEventNode): void {

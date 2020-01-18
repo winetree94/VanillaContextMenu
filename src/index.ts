@@ -1,6 +1,6 @@
 import { VanillaContext } from './Context';
-import './style.css';
 import { VanillaContextNode } from './Node';
+import './style.css';
 
 export default VanillaContext;
 
