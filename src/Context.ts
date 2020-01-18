@@ -12,7 +12,7 @@ export class VanillaContext implements VanillaContextOptions {
   public eventContainer: VanillaEventContainer = new VanillaEventContainer();
   public getContextNodes: (e: Event) => VanillaContextNode[];
   public contextGroup: VanillaContextGroup | undefined;
-  static Holder:VanillaContext[] = [];
+  static Holder: VanillaContext[] = [];
 
   constructor(
     element: HTMLElement,
@@ -40,7 +40,7 @@ export class VanillaContext implements VanillaContextOptions {
   }
 
   private onContextRequest(e: Event): void {
-    VanillaContext.Holder.forEach((context) => {
+    VanillaContext.Holder.forEach(context => {
       if (context !== this) {
         context.close();
       }
