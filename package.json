@@ -1,6 +1,6 @@
 {
   "name": "vanilla-context",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Pure javascript context menu library",
   "main": "src/index.ts",
   "author": "winetree94",
