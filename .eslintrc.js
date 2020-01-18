@@ -23,5 +23,10 @@ module.exports = {
   ],
   rules: {
     quotes: ['error', 'single']
-  }
+  },
+  "overrides": [
+    {
+      "files": [ "src/**/*.*" ]
+    }
+  ]
 }
