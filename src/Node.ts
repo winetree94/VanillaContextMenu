@@ -1,5 +1,5 @@
 export interface VanillaContextNode {
-  renderer: () => string | HTMLElement;
+  renderer: (() => string | Node) | string;
   onClick?: (event: Event) => void;
   children?: VanillaContextNode[];
 }
