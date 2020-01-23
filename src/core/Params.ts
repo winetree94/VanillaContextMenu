@@ -1,1 +1,3 @@
-export interface Params {}
+export interface Params {
+  e: Event;
+}
