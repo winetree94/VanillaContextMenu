@@ -6,35 +6,42 @@ type EventListener<K extends keyof HTMLElementEventMap> = (
 ) => // eslint-disable-next-line @typescript-eslint/no-explicit-any
 any;
 
-interface Event {
+interface VEvent {
   type: keyof HTMLElementEventMap;
   listener: EventListener<keyof HTMLElementEventMap>;
 }
 
-export abstract class EventContainer implements LifeCycle {
-  public abstract element: HTMLElement;
-  public listeners: Event[] = [];
+export interface VEventContainerInterface {
+  element: HTMLElement;
+}
+export class VEventContainer {
+  public params: VEventContainerInterface;
+  public listeners: VEvent[] = [];
+
+  public constructor(params: VEventContainerInterface) {
+    this.params = params;
+  }
 
   public addEventListener(
     type: keyof HTMLElementEventMap,
     listener: EventListener<keyof HTMLElementEventMap>,
     options?: boolean | AddEventListenerOptions
   ): void {
-    this.element.addEventListener(type, listener, options);
+    this.params.element.addEventListener(type, listener, options);
     this.listeners.push({ type, listener });
   }
 
   public clearEventListener(type: keyof HTMLElementEventMap): void {
     this.listeners.forEach(event => {
       if (event.type === type) {
-        this.element.removeEventListener(event.type, event.listener);
+        this.params.element.removeEventListener(event.type, event.listener);
       }
     });
   }
 
-  destroy(): void {
+  public destroy(): void {
     this.listeners.forEach(({ type, listener }) => {
-      this.element.removeEventListener(type, listener);
+      this.params.element.removeEventListener(type, listener);
     });
   }
 }

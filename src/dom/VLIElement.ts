@@ -1,23 +1,24 @@
+import { ContextNode } from '../core/ContextNode';
+import { VEventContainer } from '../core/VEvent';
+import { VUListElement } from './VUListElement';
 import {
-  Renderer,
-  ClassRenderer,
+  RendererInterface,
   isClassRenderer,
   isFunctionRenderer,
-  isStringRenderer,
-  RendererInterface
-} from './Renderer';
+  isStringRenderer
+} from '../core/Renderer';
 
-import { ContextNode } from './Node';
-import { VLiElement } from '../dom/Li';
-
-interface VLIElementParams {
+export interface VLIElementParams {
   e: MouseEvent;
   parent: VUListElement;
   node: ContextNode;
 }
 
-class VLIElement {
+export class VLIElement {
   public li: HTMLLIElement = document.createElement('li');
+  public vEventContainer: VEventContainer = new VEventContainer({
+    element: this.li
+  });
   public params: VLIElementParams;
   public renderer: RendererInterface | undefined;
   public child: VUListElement | undefined;
@@ -50,41 +51,27 @@ class VLIElement {
     }
   }
 
-  public setEvent(): void {}
+  public setEvent(): void {
+    this.vEventContainer.addEventListener('click', this.onClick.bind(this));
+  }
 
-  public setChild(): void {}
+  public onClick(): void {
+    this.params.node.onClick(this.params.e);
+  }
+
+  public setChild(): void {
+    if (this.params.node.children) {
+      this.child = new VUListElement({
+        e: this.params.e,
+        parent: this,
+        nodes: this.params.node.children
+      });
+    }
+  }
 
   public destroy(): void {
     if (this.renderer?.destroy) {
       this.renderer.destroy();
     }
-  }
-}
-
-interface VUListElementParams {
-  e: MouseEvent;
-  parent?: VLiElement;
-  nodes: ContextNode[];
-}
-
-class VUListElement {
-  public ul: HTMLUListElement = document.createElement('ul');
-  public children: VLIElement[] = [];
-  public params: VUListElementParams;
-  constructor(params: VUListElementParams) {
-    this.params = params;
-    this.setChildren();
-  }
-
-  setChildren(): void {
-    this.params.nodes.forEach(node => {
-      const params: VLIElementParams = {
-        e: this.params.e,
-        parent: this,
-        node: node
-      };
-      const vLi = new VLIElement(params);
-      this.children.push(vLi);
-    });
   }
 }
