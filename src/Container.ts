@@ -1,6 +1,7 @@
 import { ContextNode } from './core/ContextNode';
 import { VEventContainer } from './core/VEvent';
 import { VUListElement, VUListElementParams } from './dom/VUListElement';
+import { Log } from './misc/Log';
 
 export interface VanillaContextOptions {
   nodes: ContextNode[] | ((e: Event) => ContextNode[]);
@@ -18,7 +19,7 @@ export class VanillaContext {
   /* context options */
   public options: VanillaContextOptions;
   /* context root vElement */
-  public ul: VUListElement | undefined;
+  public vUListElement: VUListElement | undefined;
 
   constructor(element: HTMLElement, options: VanillaContextOptions) {
     this.element = element;
@@ -31,6 +32,7 @@ export class VanillaContext {
     });
     this.setContainerEvents();
     this.setWindowEvents();
+    Log.d('context create');
   }
 
   setContainerEvents(): void {
@@ -40,16 +42,29 @@ export class VanillaContext {
     );
   }
 
+  /**
+   * context click action
+   * this will invalidate other contexts and
+   * display new context to dom
+   */
   onContainerClick(e: Event): void {
+    Log.d('onContainerClick');
+    /* prevent showing default context menu */
+    e.preventDefault();
+    /* get mouse location */
     const { x, y } = VanillaContext.getMousePosition(e);
-  }
+    Log.d('requested axis', x, y);
 
-  setWindowEvents(): void {
-    return;
-  }
+    /* if user clicked opened context location, will not show context again */
+    if (
+      this.vUListElement &&
+      this.vUListElement.ul.contains(e.target as Node)
+    ) {
+      return;
+    }
 
-  show(e: MouseEvent): void {
-    this.ul = new VUListElement({
+    /* create context root */
+    this.vUListElement = new VUListElement({
       e: e,
       nodes: ((): ContextNode[] => {
         if (typeof this.options.nodes === 'function') {
@@ -59,6 +74,32 @@ export class VanillaContext {
         }
       })()
     });
+    Log.d('vUListElement created');
+
+    /* attach context root to element and reflect mouse location on the ul */
+    this.element.appendChild(this.vUListElement.ul);
+    this.vUListElement.setLocation({ x, y });
+  }
+
+  setWindowEvents(): void {
+    return;
+  }
+
+  show(e: MouseEvent): void {
+    this.vUListElement = new VUListElement({
+      e: e,
+      nodes: ((): ContextNode[] => {
+        if (typeof this.options.nodes === 'function') {
+          return this.options.nodes(e);
+        } else {
+          return this.options.nodes;
+        }
+      })()
+    });
+  }
+
+  public static closeAll(): void {
+    return;
   }
 
   private static getMousePosition(event: Event): { x: number; y: number } {

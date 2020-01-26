@@ -1,8 +1,9 @@
 import { VLIElementParams, VLIElement } from './VLIElement';
+import { MouseLocation } from '../core/MouseLocation';
 import { ContextNode } from '../core/ContextNode';
 
 export interface VUListElementParams {
-  e: MouseEvent;
+  e: Event;
   parent?: VLIElement;
   nodes: ContextNode[];
 }
@@ -26,6 +27,11 @@ export class VUListElement {
       const vLi = new VLIElement(params);
       this.children.push(vLi);
     });
+  }
+
+  public setLocation(location: MouseLocation): void {
+    this.ul.style.top = location.y + 'px';
+    this.ul.style.left = location.x + 'px';
   }
 
   public destroy(): void {

@@ -9,7 +9,7 @@ import {
 } from '../core/Renderer';
 
 export interface VLIElementParams {
-  e: MouseEvent;
+  e: Event;
   parent: VUListElement;
   node: ContextNode;
 }
