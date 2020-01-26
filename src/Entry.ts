@@ -1,3 +1,4 @@
-import './style.css';
+import './styles/style.css';
+import { VanillaContext } from './Container';
 
-export = null;
+export = VanillaContext;
