@@ -68,12 +68,12 @@
     <script>
       const basicTable = document.getElementById('basic_table');
       const basicTableContext = new VanillaContext(basicTable, {
-        nodes() {
-          return [{
-            renderer: 'hello',
-            onClick: () => {}
-          }]
-        }
+        nodes: [{
+          renderer: '할로',
+          onClick: (e) => {
+            console.log(e);
+          }
+        }]
       });
     </script>
 

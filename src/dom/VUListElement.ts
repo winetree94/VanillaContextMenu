@@ -12,9 +12,11 @@ export class VUListElement {
   public ul: HTMLUListElement = document.createElement('ul');
   public children: VLIElement[] = [];
   public params: VUListElementParams;
+
   constructor(params: VUListElementParams) {
     this.params = params;
     this.setChildren();
+    this.ul.className = 'vanilla-context-ul vanilla-context-ul-active';
   }
 
   setChildren(): void {

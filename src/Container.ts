@@ -55,12 +55,10 @@ export class VanillaContext {
     const { x, y } = VanillaContext.getMousePosition(e);
     Log.d('requested axis', x, y);
 
-    /* if user clicked opened context location, will not show context again */
-    if (
-      this.vUListElement &&
-      this.vUListElement.ul.contains(e.target as Node)
-    ) {
-      return;
+    /* if user clicked opened context location, will restart context */
+    if (this.vUListElement) {
+      this.vUListElement.destroy();
+      this.vUListElement.ul.parentElement?.removeChild(this.vUListElement.ul);
     }
 
     /* create context root */
@@ -82,7 +80,15 @@ export class VanillaContext {
   }
 
   setWindowEvents(): void {
-    return;
+    this.vWindowEventContainer.addEventListener('click', e => {
+      if (
+        this.vUListElement &&
+        !this.vUListElement.ul.contains(e.target as Node)
+      ) {
+        this.vUListElement.destroy();
+        this.vUListElement.ul.parentElement?.removeChild(this.vUListElement.ul);
+      }
+    });
   }
 
   show(e: MouseEvent): void {

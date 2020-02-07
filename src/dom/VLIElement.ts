@@ -24,8 +24,10 @@ export class VLIElement {
   public child: VUListElement | undefined;
 
   public constructor(params: VLIElementParams) {
+    this.li.className = 'vanilla-context-li';
     this.params = params;
     this.parseRenderer();
+    this.params.parent.ul.appendChild(this.li);
     this.setEvent();
     this.setChild();
   }
@@ -56,7 +58,9 @@ export class VLIElement {
   }
 
   public onClick(): void {
-    this.params.node.onClick(this.params.e);
+    if (this.params.node.onClick) {
+      this.params.node.onClick(this.params.e);
+    }
   }
 
   public setChild(): void {
