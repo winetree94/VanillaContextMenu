@@ -74,8 +74,8 @@ export class VLIElement {
   public onMouseOver(): void {
     this.li.classList.add('vanilla-context-li-hover');
     if (this.child) {
-      const { top, left, width } = this.li.getBoundingClientRect();
       this.child.show();
+      const { top, left, width } = this.li.getBoundingClientRect();
       this.child.setLocation({
         x: left + width,
         y: top
@@ -86,6 +86,9 @@ export class VLIElement {
 
   public onMouseOut(): void {
     this.li.classList.remove('vanilla-context-li-hover');
+    if (this.child) {
+      this.child.hide();
+    }
   }
 
   public setChild(): void {
