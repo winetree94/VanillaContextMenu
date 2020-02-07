@@ -55,12 +55,37 @@ export class VLIElement {
 
   public setEvent(): void {
     this.vEventContainer.addEventListener('click', this.onClick.bind(this));
+    this.vEventContainer.addEventListener(
+      'mouseover',
+      this.onMouseOver.bind(this)
+    );
+    this.vEventContainer.addEventListener(
+      'mouseout',
+      this.onMouseOut.bind(this)
+    );
   }
 
   public onClick(): void {
     if (this.params.node.onClick) {
       this.params.node.onClick(this.params.e);
     }
+  }
+
+  public onMouseOver(): void {
+    this.li.classList.add('vanilla-context-li-hover');
+    if (this.child) {
+      const { top, left, width } = this.li.getBoundingClientRect();
+      this.child.show();
+      this.child.setLocation({
+        x: left + width,
+        y: top
+      });
+      this.params.parent.select(this);
+    }
+  }
+
+  public onMouseOut(): void {
+    this.li.classList.remove('vanilla-context-li-hover');
   }
 
   public setChild(): void {
@@ -70,6 +95,19 @@ export class VLIElement {
         parent: this,
         nodes: this.params.node.children
       });
+      this.li.appendChild(this.child.ul);
+    }
+  }
+
+  public showChild(): void {
+    if (this.child) {
+      this.child.show();
+    }
+  }
+
+  public hideChild(): void {
+    if (this.child) {
+      this.child.hide();
     }
   }
 

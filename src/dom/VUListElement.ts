@@ -16,11 +16,12 @@ export class VUListElement {
   constructor(params: VUListElementParams) {
     this.params = params;
     this.setChildren();
-    this.ul.className = 'vanilla-context-ul vanilla-context-ul-active';
+    this.ul.className = 'vanilla-context-ul';
   }
 
   setChildren(): void {
     this.params.nodes.forEach(node => {
+      console.log(node);
       const params: VLIElementParams = {
         e: this.params.e,
         parent: this,
@@ -34,6 +35,22 @@ export class VUListElement {
   public setLocation(location: MouseLocation): void {
     this.ul.style.top = location.y + 'px';
     this.ul.style.left = location.x + 'px';
+  }
+
+  public select(item: VLIElement): void {
+    this.children.forEach(compare => {
+      if (item !== compare) {
+        compare.hideChild();
+      }
+    });
+  }
+
+  public show(): void {
+    this.ul.classList.add('vanilla-context-ul-active');
+  }
+
+  public hide(): void {
+    this.ul.classList.remove('vanilla-context-ul-active');
   }
 
   public destroy(): void {
