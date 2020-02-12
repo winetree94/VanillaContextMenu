@@ -3,7 +3,8 @@ export interface VElementParams {
 }
 
 export interface VElement {
-  getLayout: () => HTMLElement;
+  getElement: () => HTMLElement;
   onCreate: (params: VElementParams) => void;
   onDestroy: () => void;
 }
+

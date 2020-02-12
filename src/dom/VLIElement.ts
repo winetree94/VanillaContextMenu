@@ -34,10 +34,9 @@ export class VLIElement implements VElement {
   }
 
   public onCreate(params: VElementParams) {
-
   }
 
-  public getLayout() {
+  public getElement() {
     return this.li;
   }
 

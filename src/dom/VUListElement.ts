@@ -24,7 +24,7 @@ export class VUListElement implements VElement {
 
   }
 
-  public getLayout() {
+  public getElement() {
     return this.ul;
   }
 
