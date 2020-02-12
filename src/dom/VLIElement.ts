@@ -1,6 +1,7 @@
 import { ContextNode } from '../core/ContextNode';
 import { VEventContainer } from '../core/VEvent';
 import { VUListElement } from './VUListElement';
+import { VElement, VElementParams } from '../core/VElement';
 import {
   RendererInterface,
   isClassRenderer,
@@ -8,13 +9,13 @@ import {
   isStringRenderer
 } from '../core/Renderer';
 
-export interface VLIElementParams {
+export interface VLIElementParams extends VElementParams {
   e: Event;
   parent: VUListElement;
   node: ContextNode;
 }
 
-export class VLIElement {
+export class VLIElement implements VElement {
   public li: HTMLLIElement = document.createElement('li');
   public vEventContainer: VEventContainer = new VEventContainer({
     element: this.li
@@ -30,6 +31,14 @@ export class VLIElement {
     this.params.parent.ul.appendChild(this.li);
     this.setEvent();
     this.setChild();
+  }
+
+  public onCreate(params: VElementParams) {
+
+  }
+
+  public getLayout() {
+    return this.li;
   }
 
   public parseRenderer(): void {
@@ -114,7 +123,7 @@ export class VLIElement {
     }
   }
 
-  public destroy(): void {
+  public onDestroy(): void {
     if (this.renderer?.destroy) {
       this.renderer.destroy();
     }

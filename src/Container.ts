@@ -57,7 +57,7 @@ export class VanillaContext {
 
     /* if user clicked opened context location, will restart context */
     if (this.vUListElement) {
-      this.vUListElement.destroy();
+      this.vUListElement.onDestroy();
       this.vUListElement.ul.parentElement?.removeChild(this.vUListElement.ul);
     }
 
@@ -86,7 +86,7 @@ export class VanillaContext {
         this.vUListElement &&
         !this.vUListElement.ul.contains(e.target as Node)
       ) {
-        this.vUListElement.destroy();
+        this.vUListElement.onDestroy();
         this.vUListElement.ul.parentElement?.removeChild(this.vUListElement.ul);
       }
     });

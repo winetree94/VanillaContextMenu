@@ -1,14 +1,15 @@
 import { VLIElementParams, VLIElement } from './VLIElement';
 import { MouseLocation } from '../core/MouseLocation';
 import { ContextNode } from '../core/ContextNode';
+import { VElement, VElementParams } from "../core/VElement";
 
-export interface VUListElementParams {
+export interface VUListElementParams extends VElementParams {
   e: Event;
   parent?: VLIElement;
   nodes: ContextNode[];
 }
 
-export class VUListElement {
+export class VUListElement implements VElement {
   public ul: HTMLUListElement = document.createElement('ul');
   public children: VLIElement[] = [];
   public params: VUListElementParams;
@@ -17,6 +18,14 @@ export class VUListElement {
     this.params = params;
     this.setChildren();
     this.ul.className = 'vanilla-context-ul';
+  }
+
+  public onCreate(params: VElementParams) {
+
+  }
+
+  public getLayout() {
+    return this.ul;
   }
 
   setChildren(): void {
@@ -53,9 +62,9 @@ export class VUListElement {
     this.ul.classList.remove('vanilla-context-ul-active');
   }
 
-  public destroy(): void {
+  public onDestroy(): void {
     this.children.forEach(child => {
-      child.destroy();
+      child.onDestroy();
     });
   }
 }
