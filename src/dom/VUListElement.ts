@@ -1,7 +1,7 @@
 import { VLIElementParams, VLIElement } from './VLIElement';
 import { MouseLocation } from '../core/MouseLocation';
 import { ContextNode } from '../core/ContextNode';
-import { VElement, VElementParams } from "../core/VElement";
+import { VElement, VElementParams } from '../core/VElement';
 
 export interface VUListElementParams extends VElementParams {
   e: Event;
@@ -20,23 +20,19 @@ export class VUListElement implements VElement {
     this.ul.className = 'vanilla-context-ul';
   }
 
-  public onCreate(params: VElementParams) {
-
-  }
-
   public getElement() {
     return this.ul;
   }
 
   setChildren(): void {
     this.params.nodes.forEach(node => {
-      console.log(node);
       const params: VLIElementParams = {
         e: this.params.e,
         parent: this,
         node: node
       };
       const vLi = new VLIElement(params);
+      this.getElement().appendChild(vLi.getElement());
       this.children.push(vLi);
     });
   }
@@ -49,7 +45,7 @@ export class VUListElement implements VElement {
   public select(item: VLIElement): void {
     this.children.forEach(compare => {
       if (item !== compare) {
-        compare.hideChild();
+        compare.onDestroy();
       }
     });
   }

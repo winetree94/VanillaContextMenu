@@ -14,6 +14,10 @@ interface VEvent {
 export interface VEventContainerInterface {
   element: HTMLElement;
 }
+
+/**
+ * Event Lifecycle Container
+ */
 export class VEventContainer {
   public params: VEventContainerInterface;
   public listeners: VEvent[] = [];

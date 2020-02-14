@@ -38,7 +38,7 @@ export class VanillaContext {
   setContainerEvents(): void {
     this.vContextEventContainer.addEventListener(
       'contextmenu',
-      this.onContainerClick.bind(this)
+      this.onContextRequested.bind(this)
     );
   }
 
@@ -46,8 +46,9 @@ export class VanillaContext {
    * context click action
    * this will invalidate other contexts and
    * display new context to dom
+   * @param e {Event} - right mouse click event.
    */
-  onContainerClick(e: Event): void {
+  onContextRequested(e: Event): void {
     Log.d('onContainerClick');
     /* prevent showing default context menu */
     e.preventDefault();
@@ -74,7 +75,7 @@ export class VanillaContext {
     });
     Log.d('vUListElement created');
 
-    /* attach context root to element and reflect mouse location on the ul */
+    /* attach context root to element and reflect mouse location on the ul element */
     this.element.appendChild(this.vUListElement.ul);
     this.vUListElement.setLocation({ x, y });
     this.vUListElement.show();

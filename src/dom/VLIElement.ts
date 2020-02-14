@@ -28,12 +28,9 @@ export class VLIElement implements VElement {
     this.li.className = 'vanilla-context-li';
     this.params = params;
     this.parseRenderer();
-    this.params.parent.ul.appendChild(this.li);
+    // this.params.parent.ul.appendChild(this.li);
     this.setEvent();
-    this.setChild();
-  }
-
-  public onCreate(params: VElementParams) {
+    // this.setChild();
   }
 
   public getElement() {
@@ -53,11 +50,13 @@ export class VLIElement implements VElement {
         this.li.innerHTML = elementOrString;
       } else {
         throw new Error(
-          'Not supported renderer type, you have to return Node or String'
+          'Unsupported renderer type, you have to return Node or String'
         );
       }
     } else if (isStringRenderer(renderer)) {
       this.li.innerHTML = renderer;
+    } else {
+      throw new Error('Unsupported renderer type');
     }
   }
 
@@ -79,19 +78,29 @@ export class VLIElement implements VElement {
     }
   }
 
+  /**
+   * mouse over event of li.
+   * if children exist, this will create a child ul element
+   */
   public onMouseOver(): void {
     this.li.classList.add('vanilla-context-li-hover');
-    if (this.child) {
-      this.child.show();
-      const { top, left, width } = this.li.getBoundingClientRect();
-      this.child.setLocation({
-        x: left + width,
-        y: top
-      });
-      this.params.parent.select(this);
-    }
+    this.params.parent.select(this);
+    // if (this.child) {
+    //   this.child.show();
+    //   const { top, left, width } = this.li.getBoundingClientRect();
+    //   setTimeout(() => {
+    //     this.child?.setLocation({
+    //       x: left + width,
+    //       y: top
+    //     });
+    //   }, 0);
+    //   this.params.parent.select(this);
+    // }
   }
 
+  /**
+   * mouse out event of li
+   */
   public onMouseOut(): void {
     this.li.classList.remove('vanilla-context-li-hover');
     if (this.child) {
@@ -125,6 +134,9 @@ export class VLIElement implements VElement {
   public onDestroy(): void {
     if (this.renderer?.destroy) {
       this.renderer.destroy();
+    }
+    if (this.li.parentElement) {
+      this.li.parentElement.removeChild(this.li);
     }
   }
 }

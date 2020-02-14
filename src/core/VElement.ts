@@ -1,10 +1,9 @@
 export interface VElementParams {
+  e: Event;
   parent?: VElement;
 }
 
 export interface VElement {
   getElement: () => HTMLElement;
-  onCreate: (params: VElementParams) => void;
   onDestroy: () => void;
 }
-
