@@ -95,7 +95,7 @@ export class VLIElement implements VElement {
    */
   public onMouseOver(e: Event): void {
     Log.d('onMouseOver');
-    this.li.classList.add('vanilla-context-li-hover');
+    this.li.classList.add('hover');
     this.params.parent.select(this);
   }
 
@@ -104,7 +104,7 @@ export class VLIElement implements VElement {
    */
   public onMouseOut(e: Event): void {
     Log.d('onMouseOut');
-    this.li.classList.remove('vanilla-context-li-hover');
+    this.li.classList.remove('hover');
   }
 
   public openChild(): void {

@@ -28,16 +28,7 @@
   padding: 8px 8px;
 }
 
-/* Prevent event firing from children of li */
-/**:not(.vanilla-context-li, .vanilla-context-ul) {*/
-/*  pointer-events: none;*/
-/*}*/
-
-/*.vanilla-context-li .vanilla-context-ul {*/
-/*  pointer-events: auto;*/
-/*}*/
-
-.vanilla-context-li-hover {
+.vanilla-context-li.hover {
   background: #ecf0f1;
 }
 
