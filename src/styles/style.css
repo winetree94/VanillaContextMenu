@@ -1,6 +1,6 @@
 .vanilla-context-ul {
   background: #fff;
-  display: none;
+  display: block;
   width: 100px;
   position: fixed;
   z-index: 10;
@@ -11,13 +11,9 @@
   list-style: none;
   user-select: none; /* supported by Chrome and Opera */
   -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */  
+  -khtml-user-select: none; /* Konqueror HTML */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
-}
-
-.vanilla-context-ul-active {
-  display: block;
 }
 
 .vanilla-context-li {

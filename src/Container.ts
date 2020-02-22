@@ -9,36 +9,35 @@ export interface VanillaContextOptions {
 
 export class VanillaContext {
   /* Multiple Context Holder */
-  public static holder: VanillaContext[];
+  public static Holder: VanillaContext[];
   /* Container element */
   public element: HTMLElement;
   /* Container element event conatiner */
-  public vContextEventContainer: VEventContainer;
-  /* document.body element event container */
-  public vWindowEventContainer: VEventContainer;
+  public events: VEventContainer;
   /* context options */
   public options: VanillaContextOptions;
   /* context root vElement */
-  public vUListElement: VUListElement | undefined;
+  public context: VUListElement | undefined;
 
   constructor(element: HTMLElement, options: VanillaContextOptions) {
     this.element = element;
     this.options = options;
-    this.vContextEventContainer = new VEventContainer({
-      element: this.element
-    });
-    this.vWindowEventContainer = new VEventContainer({
-      element: document.body
-    });
-    this.setContainerEvents();
-    this.setWindowEvents();
+    this.events = new VEventContainer();
+    this.setEvents();
+    // VanillaContext.Holder.push(this);
     Log.d('context create');
   }
 
-  setContainerEvents(): void {
-    this.vContextEventContainer.addEventListener(
+  setEvents(): void {
+    this.events.addEventListener(
+      this.element,
       'contextmenu',
       this.onContextRequested.bind(this)
+    );
+    this.events.addEventListener(
+      document,
+      'click',
+      this.onWindowClicked.bind(this)
     );
   }
 
@@ -57,13 +56,13 @@ export class VanillaContext {
     Log.d('requested axis', x, y);
 
     /* if user clicked opened context location, will restart context */
-    if (this.vUListElement) {
-      this.vUListElement.onDestroy();
-      this.vUListElement.ul.parentElement?.removeChild(this.vUListElement.ul);
+    if (this.context) {
+      this.context.onDestroy();
+      this.context.detach();
     }
 
     /* create context root */
-    this.vUListElement = new VUListElement({
+    this.context = new VUListElement({
       e: e,
       nodes: ((): ContextNode[] => {
         if (typeof this.options.nodes === 'function') {
@@ -76,38 +75,15 @@ export class VanillaContext {
     Log.d('vUListElement created');
 
     /* attach context root to element and reflect mouse location on the ul element */
-    this.element.appendChild(this.vUListElement.ul);
-    this.vUListElement.setLocation({ x, y });
-    this.vUListElement.show();
+    this.element.appendChild(this.context.getElement());
+    this.context.setLocation({ x, y });
   }
 
-  setWindowEvents(): void {
-    this.vWindowEventContainer.addEventListener('click', e => {
-      if (
-        this.vUListElement &&
-        !this.vUListElement.ul.contains(e.target as Node)
-      ) {
-        this.vUListElement.onDestroy();
-        this.vUListElement.ul.parentElement?.removeChild(this.vUListElement.ul);
-      }
-    });
-  }
-
-  show(e: MouseEvent): void {
-    this.vUListElement = new VUListElement({
-      e: e,
-      nodes: ((): ContextNode[] => {
-        if (typeof this.options.nodes === 'function') {
-          return this.options.nodes(e);
-        } else {
-          return this.options.nodes;
-        }
-      })()
-    });
-  }
-
-  public static closeAll(): void {
-    return;
+  onWindowClicked(e: Event): void {
+    if (this.context && !this.context.ul.contains(e.target as Node)) {
+      this.context.onDestroy();
+      this.context.detach();
+    }
   }
 
   private static getMousePosition(event: Event): { x: number; y: number } {
@@ -128,7 +104,6 @@ export class VanillaContext {
         document.body.scrollTop +
         document.documentElement.scrollTop;
     }
-
     return {
       x: posx,
       y: posy

@@ -2,6 +2,7 @@ import { VLIElementParams, VLIElement } from './VLIElement';
 import { MouseLocation } from '../core/MouseLocation';
 import { ContextNode } from '../core/ContextNode';
 import { VElement, VElementParams } from '../core/VElement';
+import { Log } from '../misc/Log';
 
 export interface VUListElementParams extends VElementParams {
   e: Event;
@@ -9,12 +10,16 @@ export interface VUListElementParams extends VElementParams {
   nodes: ContextNode[];
 }
 
+/**
+ * Virtual UList Element
+ */
 export class VUListElement implements VElement {
   public ul: HTMLUListElement = document.createElement('ul');
   public children: VLIElement[] = [];
   public params: VUListElementParams;
 
   constructor(params: VUListElementParams) {
+    Log.l('VUListElement');
     this.params = params;
     this.setChildren();
     this.ul.className = 'vanilla-context-ul';
@@ -25,9 +30,10 @@ export class VUListElement implements VElement {
   }
 
   setChildren(): void {
-    this.params.nodes.forEach(node => {
+    this.params.nodes.forEach((node, index) => {
       const params: VLIElementParams = {
         e: this.params.e,
+        index: index,
         parent: this,
         node: node
       };
@@ -43,19 +49,17 @@ export class VUListElement implements VElement {
   }
 
   public select(item: VLIElement): void {
-    this.children.forEach(compare => {
-      if (item !== compare) {
-        compare.onDestroy();
-      }
-    });
+    this.children[item.params.index].showChild();
   }
 
-  public show(): void {
-    this.ul.classList.add('vanilla-context-ul-active');
+  public deselect(item: VLIElement): void {
+    // this.children[item.params.index].hideChild();
   }
 
-  public hide(): void {
-    this.ul.classList.remove('vanilla-context-ul-active');
+  public detach(): void {
+    if (this.ul.parentElement) {
+      this.ul.parentElement.removeChild(this.ul);
+    }
   }
 
   public onDestroy(): void {

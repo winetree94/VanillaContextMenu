@@ -7,45 +7,27 @@ type EventListener<K extends keyof HTMLElementEventMap> = (
 any;
 
 interface VEvent {
+  element: Node;
   type: keyof HTMLElementEventMap;
   listener: EventListener<keyof HTMLElementEventMap>;
 }
 
-export interface VEventContainerInterface {
-  element: HTMLElement;
-}
-
-/**
- * Event Lifecycle Container
- */
 export class VEventContainer {
-  public params: VEventContainerInterface;
   public listeners: VEvent[] = [];
 
-  public constructor(params: VEventContainerInterface) {
-    this.params = params;
-  }
-
   public addEventListener(
+    element: Node,
     type: keyof HTMLElementEventMap,
     listener: EventListener<keyof HTMLElementEventMap>,
     options?: boolean | AddEventListenerOptions
   ): void {
-    this.params.element.addEventListener(type, listener, options);
-    this.listeners.push({ type, listener });
-  }
-
-  public clearEventListener(type: keyof HTMLElementEventMap): void {
-    this.listeners.forEach(event => {
-      if (event.type === type) {
-        this.params.element.removeEventListener(event.type, event.listener);
-      }
-    });
+    element.addEventListener(type, listener, options);
+    this.listeners.push({ element, type, listener });
   }
 
   public destroy(): void {
-    this.listeners.forEach(({ type, listener }) => {
-      this.params.element.removeEventListener(type, listener);
+    this.listeners.forEach(({ element, type, listener }) => {
+      element.removeEventListener(type, listener);
     });
   }
 }

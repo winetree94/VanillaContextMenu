@@ -8,29 +8,28 @@ import {
   isFunctionRenderer,
   isStringRenderer
 } from '../core/Renderer';
+import { Log } from '../misc/Log';
 
 export interface VLIElementParams extends VElementParams {
   e: Event;
+  index: number;
   parent: VUListElement;
   node: ContextNode;
 }
 
 export class VLIElement implements VElement {
   public li: HTMLLIElement = document.createElement('li');
-  public vEventContainer: VEventContainer = new VEventContainer({
-    element: this.li
-  });
+  public events: VEventContainer = new VEventContainer();
   public params: VLIElementParams;
   public renderer: RendererInterface | undefined;
   public child: VUListElement | undefined;
 
   public constructor(params: VLIElementParams) {
+    Log.l('VLiElement');
     this.li.className = 'vanilla-context-li';
     this.params = params;
     this.parseRenderer();
-    // this.params.parent.ul.appendChild(this.li);
     this.setEvent();
-    // this.setChild();
   }
 
   public getElement() {
@@ -61,30 +60,33 @@ export class VLIElement implements VElement {
   }
 
   public setEvent(): void {
-    this.vEventContainer.addEventListener('click', this.onClick.bind(this));
-    this.vEventContainer.addEventListener(
+    this.events.addEventListener(this.li, 'click', this.onClick.bind(this));
+    this.events.addEventListener(
+      this.li,
       'mouseover',
       this.onMouseOver.bind(this)
     );
-    this.vEventContainer.addEventListener(
+    this.events.addEventListener(
+      this.li,
       'mouseout',
       this.onMouseOut.bind(this)
     );
   }
 
   public onClick(): void {
-    if (this.params.node.onClick) {
-      this.params.node.onClick(this.params.e);
-    }
+    // if (this.params.node.onClick) {
+    //   this.params.node.onClick(this.params.e);
+    // }
   }
 
   /**
    * mouse over event of li.
    * if children exist, this will create a child ul element
    */
-  public onMouseOver(): void {
+  public onMouseOver(e: Event): void {
+    Log.l('onMouseOver');
     this.li.classList.add('vanilla-context-li-hover');
-    this.params.parent.select(this);
+    // this.params.parent.select(this);
     // if (this.child) {
     //   this.child.show();
     //   const { top, left, width } = this.li.getBoundingClientRect();
@@ -101,14 +103,16 @@ export class VLIElement implements VElement {
   /**
    * mouse out event of li
    */
-  public onMouseOut(): void {
+  public onMouseOut(e: Event): void {
+    Log.l('onMouseOut');
     this.li.classList.remove('vanilla-context-li-hover');
-    if (this.child) {
-      this.child.hide();
-    }
+    // this.params.parent.deselect(this);
+    // if (this.child) {
+    //   this.child.hide();
+    // }
   }
 
-  public setChild(): void {
+  public showChild(): void {
     if (this.params.node.children) {
       this.child = new VUListElement({
         e: this.params.e,
@@ -116,18 +120,26 @@ export class VLIElement implements VElement {
         nodes: this.params.node.children
       });
       this.li.appendChild(this.child.ul);
-    }
-  }
-
-  public showChild(): void {
-    if (this.child) {
-      this.child.show();
+      const { top, left, width } = this.li.getBoundingClientRect();
+      this.child.setLocation({
+        x: left + width,
+        y: top
+      });
     }
   }
 
   public hideChild(): void {
-    if (this.child) {
-      this.child.hide();
+    if (this.child && !this.li.contains(this.child.ul)) {
+      this.child.onDestroy();
+      if (this.child.ul.parentElement) {
+        this.child.ul.parentElement.removeChild(this.child.ul);
+      }
+    }
+  }
+
+  public detach(): void {
+    if (this.li.parentElement) {
+      this.li.parentElement.removeChild(this.li);
     }
   }
 
