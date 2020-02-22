@@ -82,17 +82,20 @@ export class VLIElement implements VElement {
    * if children exist, this will create a child ul element
    */
   public onMouseOver(e: Event): void {
-    Log.d('onMouseOver');
-    this.li.classList.add('vanilla-context-li-hover');
-    if (this.params.node.children) {
-      this.child = new VUListElement({
-        e,
-        parent: this,
-        nodes: this.params.node.children
-      });
-      this.li.appendChild(this.child.getElement());
-      const { top, left, width } = this.li.getBoundingClientRect();
-      this.child.setLocation({ x: left + width, y: top });
+    if (this.li.contains(e.target as Node)) {
+      this.li.classList.add('vanilla-context-li-hover');
+      Log.d('onMouseOver');
+
+      if (this.params.node.children) {
+        this.child = new VUListElement({
+          e: this.params.e,
+          nodes: this.params.node.children,
+          parent: this
+        });
+        const { top, left, width } = this.li.getBoundingClientRect();
+        this.child.setLocation({ x: left + width, y: top });
+        this.li.appendChild(this.child.getElement());
+      }
     }
   }
 

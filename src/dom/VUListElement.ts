@@ -43,8 +43,6 @@ export class VUListElement implements VElement {
     });
   }
 
-  onChildMouseOver(): void {}
-
   public setLocation(location: MouseLocation): void {
     this.ul.style.top = location.y + 'px';
     this.ul.style.left = location.x + 'px';
