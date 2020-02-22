@@ -19,7 +19,7 @@ export class VUListElement implements VElement {
   public params: VUListElementParams;
 
   constructor(params: VUListElementParams) {
-    Log.l('VUListElement');
+    Log.d('VUListElement');
     this.params = params;
     this.setChildren();
     this.ul.className = 'vanilla-context-ul';
@@ -43,26 +43,15 @@ export class VUListElement implements VElement {
     });
   }
 
+  onChildMouseOver(): void {}
+
   public setLocation(location: MouseLocation): void {
     this.ul.style.top = location.y + 'px';
     this.ul.style.left = location.x + 'px';
   }
 
-  public select(item: VLIElement): void {
-    this.children[item.params.index].showChild();
-  }
-
-  public deselect(item: VLIElement): void {
-    // this.children[item.params.index].hideChild();
-  }
-
-  public detach(): void {
-    if (this.ul.parentElement) {
-      this.ul.parentElement.removeChild(this.ul);
-    }
-  }
-
   public onDestroy(): void {
+    this.ul.parentElement?.removeChild(this.ul);
     this.children.forEach(child => {
       child.onDestroy();
     });

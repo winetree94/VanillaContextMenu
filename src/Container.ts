@@ -58,7 +58,6 @@ export class VanillaContext {
     /* if user clicked opened context location, will restart context */
     if (this.context) {
       this.context.onDestroy();
-      this.context.detach();
     }
 
     /* create context root */
@@ -82,7 +81,6 @@ export class VanillaContext {
   onWindowClicked(e: Event): void {
     if (this.context && !this.context.ul.contains(e.target as Node)) {
       this.context.onDestroy();
-      this.context.detach();
     }
   }
 

@@ -25,7 +25,7 @@ export class VLIElement implements VElement {
   public child: VUListElement | undefined;
 
   public constructor(params: VLIElementParams) {
-    Log.l('VLiElement');
+    Log.d('VLiElement');
     this.li.className = 'vanilla-context-li';
     this.params = params;
     this.parseRenderer();
@@ -74,9 +74,7 @@ export class VLIElement implements VElement {
   }
 
   public onClick(): void {
-    // if (this.params.node.onClick) {
-    //   this.params.node.onClick(this.params.e);
-    // }
+    Log.d('onClick');
   }
 
   /**
@@ -84,71 +82,30 @@ export class VLIElement implements VElement {
    * if children exist, this will create a child ul element
    */
   public onMouseOver(e: Event): void {
-    Log.l('onMouseOver');
+    Log.d('onMouseOver');
     this.li.classList.add('vanilla-context-li-hover');
-    // this.params.parent.select(this);
-    // if (this.child) {
-    //   this.child.show();
-    //   const { top, left, width } = this.li.getBoundingClientRect();
-    //   setTimeout(() => {
-    //     this.child?.setLocation({
-    //       x: left + width,
-    //       y: top
-    //     });
-    //   }, 0);
-    //   this.params.parent.select(this);
-    // }
+    if (this.params.node.children) {
+      this.child = new VUListElement({
+        e,
+        parent: this,
+        nodes: this.params.node.children
+      });
+      this.li.appendChild(this.child.getElement());
+      const { top, left, width } = this.li.getBoundingClientRect();
+      this.child.setLocation({ x: left + width, y: top });
+    }
   }
 
   /**
    * mouse out event of li
    */
   public onMouseOut(e: Event): void {
-    Log.l('onMouseOut');
+    Log.d('onMouseOut');
     this.li.classList.remove('vanilla-context-li-hover');
-    // this.params.parent.deselect(this);
-    // if (this.child) {
-    //   this.child.hide();
-    // }
-  }
-
-  public showChild(): void {
-    if (this.params.node.children) {
-      this.child = new VUListElement({
-        e: this.params.e,
-        parent: this,
-        nodes: this.params.node.children
-      });
-      this.li.appendChild(this.child.ul);
-      const { top, left, width } = this.li.getBoundingClientRect();
-      this.child.setLocation({
-        x: left + width,
-        y: top
-      });
-    }
-  }
-
-  public hideChild(): void {
-    if (this.child && !this.li.contains(this.child.ul)) {
-      this.child.onDestroy();
-      if (this.child.ul.parentElement) {
-        this.child.ul.parentElement.removeChild(this.child.ul);
-      }
-    }
-  }
-
-  public detach(): void {
-    if (this.li.parentElement) {
-      this.li.parentElement.removeChild(this.li);
-    }
   }
 
   public onDestroy(): void {
-    if (this.renderer?.destroy) {
-      this.renderer.destroy();
-    }
-    if (this.li.parentElement) {
-      this.li.parentElement.removeChild(this.li);
-    }
+    this.renderer?.destroy();
+    this.li.parentElement?.removeChild(this.li);
   }
 }
