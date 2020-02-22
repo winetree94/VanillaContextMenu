@@ -75,6 +75,7 @@ export class VanillaContext {
 
     /* attach context root to element and reflect mouse location on the ul element */
     this.element.appendChild(this.context.getElement());
+    this.context.show();
     this.context.setLocation({ x, y });
   }
 

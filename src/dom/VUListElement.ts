@@ -43,6 +43,20 @@ export class VUListElement implements VElement {
     });
   }
 
+  public show(): void {
+    this.ul.classList.add('active');
+  }
+
+  public hide(): void {
+    this.ul.classList.remove('active');
+  }
+
+  public select(vLi: VLIElement): void {
+    this.children.forEach(compare =>
+      vLi === compare ? vLi.openChild() : compare.closeChild()
+    );
+  }
+
   public setLocation(location: MouseLocation): void {
     this.ul.style.top = location.y + 'px';
     this.ul.style.left = location.x + 'px';

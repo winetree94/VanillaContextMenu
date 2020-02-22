@@ -1,6 +1,6 @@
 .vanilla-context-ul {
   background: #fff;
-  display: block;
+  display: none;
   width: 100px;
   position: fixed;
   z-index: 10;
@@ -16,6 +16,10 @@
   -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
+.vanilla-context-ul.active {
+  display: block;
+}
+
 .vanilla-context-li {
   display: flex;
   height: 20px;
@@ -25,9 +29,9 @@
 }
 
 /* Prevent event firing from children of li */
-*:not(.vanilla-context-li, .vanilla-context-ul) {
-  pointer-events: none;
-}
+/**:not(.vanilla-context-li, .vanilla-context-ul) {*/
+/*  pointer-events: none;*/
+/*}*/
 
 /*.vanilla-context-li .vanilla-context-ul {*/
 /*  pointer-events: auto;*/

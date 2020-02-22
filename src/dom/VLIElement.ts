@@ -29,7 +29,19 @@ export class VLIElement implements VElement {
     this.li.className = 'vanilla-context-li';
     this.params = params;
     this.parseRenderer();
+    this.setChild();
     this.setEvent();
+  }
+
+  public setChild(): void {
+    if (this.params.node.children) {
+      this.child = new VUListElement({
+        e: this.params.e,
+        parent: this,
+        nodes: this.params.node.children
+      });
+      this.li.appendChild(this.child.getElement());
+    }
   }
 
   public getElement() {
@@ -82,21 +94,9 @@ export class VLIElement implements VElement {
    * if children exist, this will create a child ul element
    */
   public onMouseOver(e: Event): void {
-    if (this.li.contains(e.target as Node)) {
-      this.li.classList.add('vanilla-context-li-hover');
-      Log.d('onMouseOver');
-
-      if (this.params.node.children) {
-        this.child = new VUListElement({
-          e: this.params.e,
-          nodes: this.params.node.children,
-          parent: this
-        });
-        const { top, left, width } = this.li.getBoundingClientRect();
-        this.child.setLocation({ x: left + width, y: top });
-        this.li.appendChild(this.child.getElement());
-      }
-    }
+    Log.d('onMouseOver');
+    this.li.classList.add('vanilla-context-li-hover');
+    this.params.parent.select(this);
   }
 
   /**
@@ -105,6 +105,16 @@ export class VLIElement implements VElement {
   public onMouseOut(e: Event): void {
     Log.d('onMouseOut');
     this.li.classList.remove('vanilla-context-li-hover');
+  }
+
+  public openChild(): void {
+    const { top, left, width } = this.li.getBoundingClientRect();
+    this.child?.show();
+    this.child?.setLocation({ x: left + width, y: top });
+  }
+
+  public closeChild(): void {
+    this.child?.hide();
   }
 
   public onDestroy(): void {
