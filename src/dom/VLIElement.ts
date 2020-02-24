@@ -1,4 +1,5 @@
 import { ContextNode } from '../core/ContextNode';
+import { VanillaContext } from '../Container';
 import { VEventContainer } from '../core/VEvent';
 import { VUListElement } from './VUListElement';
 import { VElement, VElementParams } from '../core/VElement';
@@ -11,6 +12,7 @@ import {
 import { Log } from '../misc/Log';
 
 export interface VLIElementParams extends VElementParams {
+  context: VanillaContext;
   e: Event;
   index: number;
   parent: VUListElement;
@@ -36,6 +38,7 @@ export class VLIElement implements VElement {
   public setChild(): void {
     if (this.params.node.children) {
       this.child = new VUListElement({
+        context: this.params.context,
         e: this.params.e,
         parent: this,
         nodes: this.params.node.children
@@ -97,7 +100,15 @@ export class VLIElement implements VElement {
   public onClick(e: Event): void {
     if (e.target === this.li && this.params.node.onClick) {
       Log.d('onClick');
-      this.params.node.onClick(this.params.e);
+      this.params.node.onClick({
+        api: this.params.context,
+        event: e,
+        originEvent: this.params.e
+      });
+
+      if (this.params.context.options.autoClose) {
+        this.params.context.close();
+      }
     }
   }
 

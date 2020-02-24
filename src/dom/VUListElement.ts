@@ -1,3 +1,4 @@
+import { VanillaContext } from '../Container';
 import { VLIElementParams, VLIElement } from './VLIElement';
 import { MouseLocation } from '../core/MouseLocation';
 import { ContextNode } from '../core/ContextNode';
@@ -5,6 +6,7 @@ import { VElement, VElementParams } from '../core/VElement';
 import { Log } from '../misc/Log';
 
 export interface VUListElementParams extends VElementParams {
+  context: VanillaContext;
   e: Event;
   parent?: VLIElement;
   nodes: ContextNode[];
@@ -32,6 +34,7 @@ export class VUListElement implements VElement {
   setChildren(): void {
     this.params.nodes.forEach((node, index) => {
       const params: VLIElementParams = {
+        context: this.params.context,
         e: this.params.e,
         index: index,
         parent: this,

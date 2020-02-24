@@ -4,8 +4,14 @@ import { VUListElement } from './dom/VUListElement';
 import { Log } from './misc/Log';
 
 export interface VanillaContextOptions {
+  autoClose?: boolean;
   nodes: ContextNode[] | ((e: Event) => ContextNode[]);
 }
+
+const defaultContextOptions: VanillaContextOptions = {
+  autoClose: true,
+  nodes: []
+};
 
 export class VanillaContext {
   /* Multiple Context Holder */
@@ -21,10 +27,10 @@ export class VanillaContext {
 
   constructor(element: HTMLElement, options: VanillaContextOptions) {
     this.element = element;
-    this.options = options;
+    this.options = Object.assign(defaultContextOptions, options);
     this.events = new VEventContainer();
     this.setEvents();
-    VanillaContext.Holder.push(this);
+    // VanillaContext.Holder.push(this);
     Log.d('context create');
   }
 
@@ -62,6 +68,7 @@ export class VanillaContext {
 
     /* create context root */
     this.context = new VUListElement({
+      context: this,
       e: e,
       nodes: ((): ContextNode[] => {
         if (typeof this.options.nodes === 'function') {
@@ -81,6 +88,12 @@ export class VanillaContext {
 
   onWindowClicked(e: Event): void {
     if (this.context && !this.context.ul.contains(e.target as Node)) {
+      this.context.onDestroy();
+    }
+  }
+
+  close(): void {
+    if (this.context) {
       this.context.onDestroy();
     }
   }

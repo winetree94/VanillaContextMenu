@@ -43,7 +43,7 @@
           </tr>
         </thead>
 
-        <tbody>
+        <tbody id="basic_table_body">
           <tr>
             <td>1</td>
             <td>Honda</td>
@@ -68,15 +68,17 @@
       </table>
 
       <script>
-        const basicTable = document.getElementById('basic_table');
-        const basicTableContext = new VanillaContext(basicTable, {
+        const basicTableBody = document.getElementById('basic_table_body');
+        const basicTableContext = new VanillaContext(basicTableBody, {
+          autoClose: false,
           nodes: [{
             renderer: 'remove row',
-            onClick: (e) => {
-              const row = e.target.closest('tr');
+            onClick: ({ api, originEvent }) => {
+              const row = originEvent.target.closest('tr');
               if (row) {
                 row.parentElement.removeChild(row);
               }
+              api.close();
             },
           }, {
             renderer: '<bold>굵게</bold>',
