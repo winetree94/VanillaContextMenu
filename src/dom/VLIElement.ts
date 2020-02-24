@@ -95,8 +95,9 @@ export class VLIElement implements VElement {
   }
 
   public onClick(e: Event): void {
-    if (e.target === this.li) {
+    if (e.target === this.li && this.params.node.onClick) {
       Log.d('onClick');
+      this.params.node.onClick(this.params.e);
     }
   }
 

@@ -71,47 +71,13 @@
         const basicTable = document.getElementById('basic_table');
         const basicTableContext = new VanillaContext(basicTable, {
           nodes: [{
-            renderer: '할로',
+            renderer: 'remove row',
             onClick: (e) => {
-              console.log(e);
-            },
-            children: [{
-              renderer: '할로',
-              onClick: (e) => {
-                console.log(e);
+              const row = e.target.closest('tr');
+              if (row) {
+                row.parentElement.removeChild(row);
               }
-            }, {
-              renderer: '<bold>굵게</bold>',
-              onClick: (e) => {
-                console.log(e);
-              },
-              children: [{
-                renderer: (e) => {
-                  const p = document.createElement('p');
-                  p.innerHTML = 'ㅋㅋㅋㅋ';
-                  return p;
-                },
-                onClick: (e) => {
-                  console.log(e);
-                }
-              }, {
-                renderer: '<bold>굵게</bold>',
-                onClick: (e) => {
-                  console.log(e);
-                },
-                children: [{
-                  renderer: '할로',
-                  onClick: (e) => {
-                    console.log(e);
-                  }
-                }, {
-                  renderer: '<bold>굵게</bold>',
-                  onClick: (e) => {
-                    console.log(e);
-                  }
-                }]
-              }]
-            }]
+            },
           }, {
             renderer: '<bold>굵게</bold>',
             onClick: (e) => {
