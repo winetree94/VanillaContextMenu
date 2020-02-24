@@ -48,6 +48,9 @@ export class VLIElement implements VElement {
     return this.li;
   }
 
+  /**
+   * Parse custom renderer user provided
+   */
   public parseRenderer(): void {
     const renderer = this.params.node.renderer;
     if (isClassRenderer(renderer)) {
@@ -69,6 +72,12 @@ export class VLIElement implements VElement {
     } else {
       throw new Error('Unsupported renderer type');
     }
+    /* If node has child nodes, create arrow icon */
+    if (this.params.node.children) {
+      const icon = document.createElement('div');
+      icon.classList.add('vanilla-context-icon');
+      this.li.appendChild(icon);
+    }
   }
 
   public setEvent(): void {
@@ -85,8 +94,10 @@ export class VLIElement implements VElement {
     );
   }
 
-  public onClick(): void {
-    Log.d('onClick');
+  public onClick(e: Event): void {
+    if (e.target === this.li) {
+      Log.d('onClick');
+    }
   }
 
   /**

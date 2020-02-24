@@ -24,7 +24,7 @@ export class VanillaContext {
     this.options = options;
     this.events = new VEventContainer();
     this.setEvents();
-    // VanillaContext.Holder.push(this);
+    VanillaContext.Holder.push(this);
     Log.d('context create');
   }
 
@@ -44,7 +44,7 @@ export class VanillaContext {
   /**
    * context click action
    * this will invalidate other contexts and
-   * display new context to dom
+   * display new context to the dom
    * @param e {Event} - right mouse click event.
    */
   onContextRequested(e: Event): void {
