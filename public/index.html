@@ -72,6 +72,14 @@
         const basicTableContext = new VanillaContext(basicTableBody, {
           autoClose: false,
           nodes: [{
+            renderer: (params) => {
+              const td = params.originEvent.target.closest('td');
+              return '<b>' + td.textContent + '</b>';
+            },
+            onClick: (params) => {
+              console.log(params);
+            }
+          }, {
             renderer: 'remove row',
             onClick: ({ api, originEvent }) => {
               const row = originEvent.target.closest('tr');

@@ -7,8 +7,14 @@ export interface ContextNodeEventParams {
   originEvent: Event;
 }
 
+export interface ContextDisabledParams {
+  api: VanillaContext;
+  originEvent: Event;
+}
+
 export interface ContextNode {
   renderer: Renderer;
   onClick: (params: ContextNodeEventParams) => void;
   children?: ContextNode[];
+  disabled?: boolean | ((params: ContextDisabledParams) => boolean);
 }

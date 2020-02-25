@@ -31,6 +31,7 @@ export class VLIElement implements VElement {
     this.li.className = 'vanilla-context-li';
     this.params = params;
     this.parseRenderer();
+    this.parseDisabled();
     this.setChild();
     this.setEvent();
   }
@@ -58,9 +59,15 @@ export class VLIElement implements VElement {
     const renderer = this.params.node.renderer;
     if (isClassRenderer(renderer)) {
       this.renderer = new renderer();
-      this.renderer.init({ e: this.params.e });
+      this.renderer.init({
+        api: this.params.context,
+        originEvent: this.params.e
+      });
     } else if (isFunctionRenderer(renderer)) {
-      const elementOrString = renderer({ e: this.params.e });
+      const elementOrString = renderer({
+        api: this.params.context,
+        originEvent: this.params.e
+      });
       if (elementOrString instanceof Node) {
         this.li.appendChild(elementOrString);
       } else if (typeof elementOrString === 'string') {
@@ -143,5 +150,31 @@ export class VLIElement implements VElement {
   public onDestroy(): void {
     this.renderer?.destroy();
     this.li.parentElement?.removeChild(this.li);
+  }
+
+  /**
+   * parse disabled property
+   */
+  private parseDisabled(): void {
+    const { disabled } = this.params.node;
+
+    /* if user not provide disabled property, will stop */
+    if (!disabled) {
+      return;
+    }
+
+    /* if property type is boolean */
+    if (typeof disabled === 'boolean') {
+      this.li.classList.add('disabled');
+      /* if property type is function */
+    } else if (
+      typeof disabled === 'function' &&
+      disabled({
+        api: this.params.context,
+        originEvent: this.params.e
+      })
+    ) {
+      this.li.classList.add('disabled');
+    }
   }
 }

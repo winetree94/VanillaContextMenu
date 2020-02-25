@@ -1,5 +1,7 @@
 // import { Params } from './Params';
 /* Renderer type definition */
+import { VanillaContext } from '../Container';
+
 export type FunctionRenderer = (params: RendererParams) => Node | string;
 export type ClassRenderer = new () => RendererInterface;
 export type StringRenderer = string;
@@ -7,7 +9,8 @@ export type Renderer = StringRenderer | ClassRenderer | FunctionRenderer;
 
 /* Renderer Params */
 export interface RendererParams {
-  e: Event;
+  api: VanillaContext;
+  originEvent: Event;
 }
 
 /* Class renderer interface */
