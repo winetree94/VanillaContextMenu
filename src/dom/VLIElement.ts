@@ -31,6 +31,7 @@ export class VLIElement implements VElement {
     this.li.className = 'vanilla-context-li';
     this.params = params;
     this.parseRenderer();
+    this.parseHeight();
     this.parseDisabled();
     this.setChild();
     this.setEvent();
@@ -82,8 +83,11 @@ export class VLIElement implements VElement {
     } else {
       throw new Error('Unsupported renderer type');
     }
+
+    const { children, height } = this.params.node;
+
     /* If node has child nodes, create arrow icon */
-    if (this.params.node.children) {
+    if (children) {
       const icon = document.createElement('div');
       icon.classList.add('vanilla-context-icon');
       this.li.appendChild(icon);
@@ -175,6 +179,25 @@ export class VLIElement implements VElement {
       })
     ) {
       this.li.classList.add('disabled');
+    }
+  }
+
+  /**
+   * parse height property
+   */
+  private parseHeight() {
+    const { height } = this.params.node;
+    if (!height) {
+      return;
+    }
+    /* If user provided custom height */
+    if (typeof height === 'function') {
+      this.li.style.height = `${height({
+        api: this.params.context,
+        originEvent: this.params.e
+      })}px`;
+    } else {
+      this.li.style.height = `${height}px`;
     }
   }
 }

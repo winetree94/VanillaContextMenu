@@ -4,12 +4,14 @@ import { VUListElement } from './dom/VUListElement';
 import { Log } from './misc/Log';
 
 export interface VanillaContextOptions {
+  debug?: boolean;
   autoClose?: boolean;
   nodes: ContextNode[] | ((e: Event) => ContextNode[]);
 }
 
 const defaultContextOptions: VanillaContextOptions = {
   autoClose: true,
+  debug: true,
   nodes: []
 };
 
@@ -57,9 +59,11 @@ export class VanillaContext {
     Log.d('onContainerClick');
     /* prevent showing default context menu */
     e.preventDefault();
-    /* get mouse location */
-    const { x, y } = VanillaContext.getMousePosition(e);
-    Log.d('requested axis', x, y);
+
+    /* if user request context inside opened context, will stop */
+    if (this.context && this.context.ul.contains(e.target as Node)) {
+      return;
+    }
 
     /* if user clicked opened context location, will restart context */
     if (this.context) {
@@ -82,17 +86,23 @@ export class VanillaContext {
 
     /* attach context root to element and reflect mouse location on the ul element */
     this.element.appendChild(this.context.getElement());
+    /* get Mouse position */
+    const { x, y } = VanillaContext.getMousePosition(e);
+    Log.d('requested axis', x, y);
+    /* this will showing context and locate correct position */
     this.context.show();
     this.context.setLocation({ x, y });
   }
 
   onWindowClicked(e: Event): void {
+    Log.d('onWindowClicked');
     if (this.context && !this.context.ul.contains(e.target as Node)) {
       this.context.onDestroy();
     }
   }
 
   close(): void {
+    Log.d('close()');
     if (this.context) {
       this.context.onDestroy();
     }

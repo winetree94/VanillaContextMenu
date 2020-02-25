@@ -12,9 +12,15 @@ export interface ContextDisabledParams {
   originEvent: Event;
 }
 
+export interface ContextHeightParams {
+  api: VanillaContext;
+  originEvent: Event;
+}
+
 export interface ContextNode {
   renderer: Renderer;
   onClick: (params: ContextNodeEventParams) => void;
   children?: ContextNode[];
   disabled?: boolean | ((params: ContextDisabledParams) => boolean);
+  height?: number | ((params: ContextHeightParams) => number);
 }

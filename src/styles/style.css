@@ -29,6 +29,11 @@
   padding: 8px 8px;
 }
 
+.vanilla-context-li.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .vanilla-context-li.hover {
   background: #ecf0f1;
 }

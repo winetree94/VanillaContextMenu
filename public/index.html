@@ -76,9 +76,8 @@
               const td = params.originEvent.target.closest('td');
               return '<b>' + td.textContent + '</b>';
             },
-            onClick: (params) => {
-              console.log(params);
-            }
+            disabled: true,
+            height: 50
           }, {
             renderer: 'remove row',
             onClick: ({ api, originEvent }) => {
