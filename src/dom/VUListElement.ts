@@ -25,6 +25,7 @@ export class VUListElement implements VElement {
     this.params = params;
     this.setChildren();
     this.ul.className = 'vanilla-context-ul';
+    this.parseGroupClass();
   }
 
   public getElement() {
@@ -70,5 +71,21 @@ export class VUListElement implements VElement {
     this.children.forEach(child => {
       child.onDestroy();
     });
+  }
+
+  private parseGroupClass() {
+    const { groupClasses } = this.params.context.options;
+    if (!groupClasses) {
+      return;
+    }
+    if (typeof groupClasses === 'function') {
+      const classes = groupClasses({
+        api: this.params.context,
+        originEvent: this.params.e
+      });
+      this.ul.className = `${this.ul.className} ${classes}`;
+    } else {
+      this.ul.className = `${this.ul.className} ${groupClasses}`;
+    }
   }
 }

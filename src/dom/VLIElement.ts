@@ -31,7 +31,10 @@ export class VLIElement implements VElement {
     this.li.className = 'vanilla-context-li';
     this.params = params;
     this.parseRenderer();
-    this.parseHeight();
+    this.parseItemClass();
+
+    this.parseStyle();
+    this.parseClass();
     this.parseDisabled();
     this.setChild();
     this.setEvent();
@@ -84,7 +87,7 @@ export class VLIElement implements VElement {
       throw new Error('Unsupported renderer type');
     }
 
-    const { children, height } = this.params.node;
+    const { children } = this.params.node;
 
     /* If node has child nodes, create arrow icon */
     if (children) {
@@ -156,6 +159,22 @@ export class VLIElement implements VElement {
     this.li.parentElement?.removeChild(this.li);
   }
 
+  private parseItemClass() {
+    const { itemClasses } = this.params.context.options;
+    if (!itemClasses) {
+      return;
+    }
+    if (typeof itemClasses === 'function') {
+      const classList = itemClasses({
+        api: this.params.context,
+        originEvent: this.params.e
+      });
+      this.li.className = `${this.li.className} ${classList}`;
+    } else {
+      this.li.className = `${this.li.className} ${itemClasses}`;
+    }
+  }
+
   /**
    * parse disabled property
    */
@@ -185,19 +204,38 @@ export class VLIElement implements VElement {
   /**
    * parse height property
    */
-  private parseHeight() {
-    const { height } = this.params.node;
-    if (!height) {
+  private parseStyle() {
+    const { style } = this.params.node;
+    if (!style) {
       return;
     }
     /* If user provided custom height */
-    if (typeof height === 'function') {
-      this.li.style.height = `${height({
+    if (typeof style === 'function') {
+      Object.assign(
+        this.li.style,
+        style({
+          api: this.params.context,
+          originEvent: this.params.e
+        })
+      );
+    } else {
+      Object.assign(this.li.style, style);
+    }
+  }
+
+  private parseClass() {
+    const { classes } = this.params.node;
+    if (!classes) {
+      return;
+    }
+    if (typeof classes === 'function') {
+      const classList = classes({
         api: this.params.context,
         originEvent: this.params.e
-      })}px`;
+      });
+      this.li.className = `${this.li.className} ${classList}`;
     } else {
-      this.li.style.height = `${height}px`;
+      this.li.className = `${this.li.className} ${classes}`;
     }
   }
 }

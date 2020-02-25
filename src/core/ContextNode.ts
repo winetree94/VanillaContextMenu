@@ -12,7 +12,12 @@ export interface ContextDisabledParams {
   originEvent: Event;
 }
 
-export interface ContextHeightParams {
+export interface ContextStyleParams {
+  api: VanillaContext;
+  originEvent: Event;
+}
+
+export interface ContextClassParams {
   api: VanillaContext;
   originEvent: Event;
 }
@@ -22,5 +27,6 @@ export interface ContextNode {
   onClick: (params: ContextNodeEventParams) => void;
   children?: ContextNode[];
   disabled?: boolean | ((params: ContextDisabledParams) => boolean);
-  height?: number | ((params: ContextHeightParams) => number);
+  style?: object | ((params: ContextStyleParams) => object);
+  classes?: string | ((params: ContextClassParams) => string);
 }

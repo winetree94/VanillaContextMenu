@@ -77,7 +77,9 @@
               return '<b>' + td.textContent + '</b>';
             },
             disabled: true,
-            height: 50
+            style: {
+              height: '60px'
+            }
           }, {
             renderer: 'remove row',
             onClick: ({ api, originEvent }) => {

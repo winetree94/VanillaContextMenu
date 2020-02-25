@@ -3,10 +3,41 @@ import { VEventContainer } from './core/VEvent';
 import { VUListElement } from './dom/VUListElement';
 import { Log } from './misc/Log';
 
+export interface ContextNodeParams {
+  api: VanillaContext;
+  originEvent: Event;
+}
+
+export interface ContextGroupClassParams {
+  api: VanillaContext;
+  originEvent: Event;
+}
+
+export interface ContextItemClassParams {
+  api: VanillaContext;
+  originEvent: Event;
+}
+
+export interface ContextItemStyleParams {
+  api: VanillaContext;
+  originEvent: Event;
+}
+
+export interface ContextGroupStyleParams {
+  api: VanillaContext;
+  originEvent: Event;
+}
+
 export interface VanillaContextOptions {
   debug?: boolean;
   autoClose?: boolean;
-  nodes: ContextNode[] | ((e: Event) => ContextNode[]);
+  hideArrow?: boolean;
+  customArrow?: string;
+  groupStyle?: object | ((params: ContextGroupStyleParams) => object);
+  itemStyle?: object | ((params: ContextItemStyleParams) => object);
+  groupClasses?: string | ((params: ContextGroupClassParams) => string);
+  itemClasses?: string | ((params: ContextItemClassParams) => string);
+  nodes: ContextNode[] | ((params: ContextNodeParams) => ContextNode[]);
 }
 
 const defaultContextOptions: VanillaContextOptions = {
@@ -76,7 +107,10 @@ export class VanillaContext {
       e: e,
       nodes: ((): ContextNode[] => {
         if (typeof this.options.nodes === 'function') {
-          return this.options.nodes(e);
+          return this.options.nodes({
+            api: this,
+            originEvent: e
+          });
         } else {
           return this.options.nodes;
         }
