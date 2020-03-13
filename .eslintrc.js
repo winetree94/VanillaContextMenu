@@ -4,10 +4,10 @@ module.exports = {
     es6: true
   },
   extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier/@typescript-eslint',
     'plugin:prettier/recommended'
   ],
@@ -17,17 +17,14 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.json',
+    project: './tsconfig.json'
   },
-  plugins: [
-    'prettier', '@typescript-eslint'
-  ],
+  plugins: ['prettier', '@typescript-eslint'],
   rules: {
+    'prettier/prettier': 'error',
     quotes: ['error', 'single']
   },
-  "overrides": [
-    {
-      "files": [ "src/**/*.*" ]
-    }
-  ]
-}
+  settings: {
+    'html/html-extensions': ['.html', '.we']
+  }
+};

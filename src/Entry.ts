@@ -1,5 +1,4 @@
-import { VanillaContext } from './Context';
-import { VanillaContextNode } from './Node';
-import './style.css';
+import './styles/style.css';
+import { VanillaContext } from './Container';
 
 export = VanillaContext;
