@@ -24,11 +24,6 @@ module.exports = {
     'prettier/prettier': 'error',
     quotes: ['error', 'single']
   },
-  overrides: [
-    {
-      files: ['src/**/*.*', 'public/**.*.*']
-    }
-  ],
   settings: {
     'html/html-extensions': ['.html', '.we']
   }
