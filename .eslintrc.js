@@ -26,5 +26,8 @@ module.exports = {
   },
   settings: {
     'html/html-extensions': ['.html', '.we']
-  }
+  },
+  overrides: [{
+    'files': ['src/*', 'stories/*']
+  }]
 };

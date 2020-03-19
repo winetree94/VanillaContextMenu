@@ -10,21 +10,16 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js -p",
     "debug": "webpack-dev-server --config webpack.dev.js",
-    "test": "eslint \"src/**/*.ts\"",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "docsify": "docsify serve docs",
+    "test": "eslint \"src/**/*.ts\""
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
-    "@storybook/addon-info": "^5.3.14",
-    "@storybook/addon-notes": "^5.3.14",
-    "@storybook/eslint-config-storybook": "^2.2.0",
-    "@storybook/html": "^5.3.14",
-    "@storybook/preset-typescript": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
+    "docsify": "^4.11.2",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
     "eslint-loader": "^3.0.3",
@@ -43,5 +38,6 @@
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1",
     "webpack-merge": "^4.2.2"
-  }
+  },
+  "dependencies": {}
 }

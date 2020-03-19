@@ -52,7 +52,7 @@ export class VLIElement implements VElement {
     }
   }
 
-  public getElement() {
+  public getElement(): HTMLElement {
     return this.li;
   }
 
