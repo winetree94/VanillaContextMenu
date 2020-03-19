@@ -11,10 +11,14 @@
     "build": "webpack --config webpack.prod.js -p",
     "debug": "webpack-dev-server --config webpack.dev.js",
     "docsify": "docsify serve docs",
+    "storybook": "start-storybook -p 8000",
+    "storybook:build": "build-storybook -c .storybook -o docs",
     "test": "eslint \"src/**/*.ts\""
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
+    "@storybook/html": "^5.3.17",
+    "@storybook/preset-typescript": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
     "babel-loader": "^8.0.6",
