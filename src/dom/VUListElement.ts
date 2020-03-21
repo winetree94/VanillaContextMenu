@@ -21,7 +21,6 @@ export class VUListElement implements VElement {
   public params: VUListElementParams;
 
   constructor(params: VUListElementParams) {
-    Log.d('VUListElement');
     this.params = params;
     this.setChildren();
     this.ul.className = 'vanilla-context-ul';

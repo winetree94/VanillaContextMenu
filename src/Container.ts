@@ -63,8 +63,6 @@ export class VanillaContext {
     this.options = Object.assign(defaultContextOptions, options);
     this.events = new VEventContainer();
     this.setEvents();
-    // VanillaContext.Holder.push(this);
-    Log.d('context create');
   }
 
   setEvents(): void {
@@ -87,7 +85,6 @@ export class VanillaContext {
    * @param e {Event} - right mouse click event.
    */
   onContextRequested(e: Event): void {
-    Log.d('onContainerClick');
     /* prevent showing default context menu */
     e.preventDefault();
 
@@ -116,27 +113,23 @@ export class VanillaContext {
         }
       })()
     });
-    Log.d('vUListElement created');
 
     /* attach context root to element and reflect mouse location on the ul element */
     this.element.appendChild(this.context.getElement());
     /* get Mouse position */
     const { x, y } = VanillaContext.getMousePosition(e);
-    Log.d('requested axis', x, y);
     /* this will showing context and locate correct position */
     this.context.show();
     this.context.setLocation({ x, y });
   }
 
   onWindowClicked(e: Event): void {
-    Log.d('onWindowClicked');
     if (this.context && !this.context.ul.contains(e.target as Node)) {
       this.context.onDestroy();
     }
   }
 
   close(): void {
-    Log.d('close()');
     if (this.context) {
       this.context.onDestroy();
     }

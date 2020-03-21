@@ -27,7 +27,6 @@ export class VLIElement implements VElement {
   public child: VUListElement | undefined;
 
   public constructor(params: VLIElementParams) {
-    Log.d('VLiElement');
     this.li.className = 'vanilla-context-li';
     this.params = params;
     this.parseRenderer();
@@ -113,7 +112,6 @@ export class VLIElement implements VElement {
 
   public onClick(e: Event): void {
     if (e.target === this.li && this.params.node.onClick) {
-      Log.d('onClick');
       this.params.node.onClick({
         api: this.params.context,
         event: e,
@@ -131,7 +129,6 @@ export class VLIElement implements VElement {
    * if children exist, this will create a child ul element
    */
   public onMouseOver(e: Event): void {
-    Log.d('onMouseOver');
     this.li.classList.add('hover');
     this.params.parent.select(this);
   }
@@ -140,7 +137,6 @@ export class VLIElement implements VElement {
    * mouse out event of li
    */
   public onMouseOut(e: Event): void {
-    Log.d('onMouseOut');
     this.li.classList.remove('hover');
   }
 
