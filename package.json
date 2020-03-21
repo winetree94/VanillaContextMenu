@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "author": "winetree94",
   "license": "MIT",
-  "homepage": "https://winetree94.github.io/VanillaContextMenu/dist/index.html",
+  "homepage": "https://winetree94.github.io/VanillaContextMenu",
   "repository": "https://github.com/winetree94/VanillaContextMenu",
   "scripts": {
     "build": "webpack --config webpack.prod.js -p",
@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
-    "@storybook/html": "^5.3.17",
+    "@storybook/html": "^5.3.14",
     "@storybook/preset-typescript": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
