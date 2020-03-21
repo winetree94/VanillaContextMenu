@@ -1,4 +1,3 @@
-// import { Params } from './Params';
 /* Renderer type definition */
 import { VanillaContext } from '../Container';
 

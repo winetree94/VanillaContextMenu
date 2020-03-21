@@ -1,5 +1,3 @@
-import { LifeCycle } from './LifeCycle';
-
 type EventListener<K extends keyof HTMLElementEventMap> = (
   this: HTMLElement,
   ev: HTMLElementEventMap[K]
