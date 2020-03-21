@@ -4,7 +4,7 @@ import { VanillaContext } from '../src/Container';
 
 const stories = storiesOf('Demo', module);
 
-stories.add('base', () => {
+stories.add('intro', () => {
   const table = document.createElement('table');
   table.innerHTML = `
       <tr>
@@ -46,10 +46,15 @@ stories.add('base', () => {
   const contextmenu = new VanillaContext(table, {
     nodes: [
       {
-        renderer: 'Demo',
-        onClick() {
-          alert('Demo!');
-        }
+        renderer: 'This is context menu',
+        children: [
+          {
+            renderer: 'hello'
+          },
+          {
+            renderer: 'hello'
+          }
+        ]
       }
     ]
   });

@@ -24,7 +24,7 @@ export interface ContextClassParams {
 
 export interface ContextNode {
   renderer: Renderer;
-  onClick: (params: ContextNodeEventParams) => void;
+  onClick?: (params: ContextNodeEventParams) => void;
   children?: ContextNode[];
   disabled?: boolean | ((params: ContextDisabledParams) => boolean);
   style?: object | ((params: ContextStyleParams) => object);

@@ -8,7 +8,6 @@
   "homepage": "https://winetree94.github.io/VanillaContextMenu",
   "repository": "https://github.com/winetree94/VanillaContextMenu",
   "scripts": {
-    "debug" : "npm run debug:context && npm run debug:storybook",
     "debug:context": "webpack-dev-server --config webpack.dev.js",
     "debug:storybook": "start-storybook -p 8000",
     "build": "npm run build:context && npm run build:storybook",
