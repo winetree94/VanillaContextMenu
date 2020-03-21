@@ -1,7 +1,6 @@
 import { ContextNode } from './core/ContextNode';
 import { VEventContainer } from './core/VEvent';
 import { VUListElement } from './dom/VUListElement';
-import { Log } from './misc/Log';
 
 export interface ContextNodeParams {
   api: VanillaContext;

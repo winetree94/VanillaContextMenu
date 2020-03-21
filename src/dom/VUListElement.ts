@@ -3,7 +3,6 @@ import { VLIElementParams, VLIElement } from './VLIElement';
 import { MouseLocation } from '../core/MouseLocation';
 import { ContextNode } from '../core/ContextNode';
 import { VElement, VElementParams } from '../core/VElement';
-import { Log } from '../misc/Log';
 
 export interface VUListElementParams extends VElementParams {
   context: VanillaContext;
@@ -27,7 +26,7 @@ export class VUListElement implements VElement {
     this.parseGroupClass();
   }
 
-  public getElement() {
+  public getElement(): HTMLElement {
     return this.ul;
   }
 
@@ -72,7 +71,7 @@ export class VUListElement implements VElement {
     });
   }
 
-  private parseGroupClass() {
+  private parseGroupClass(): void {
     const { groupClasses } = this.params.context.options;
     if (!groupClasses) {
       return;

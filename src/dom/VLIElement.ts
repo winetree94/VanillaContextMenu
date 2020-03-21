@@ -155,7 +155,7 @@ export class VLIElement implements VElement {
     this.li.parentElement?.removeChild(this.li);
   }
 
-  private parseItemClass() {
+  private parseItemClass(): void {
     const { itemClasses } = this.params.context.options;
     if (!itemClasses) {
       return;
@@ -200,7 +200,7 @@ export class VLIElement implements VElement {
   /**
    * parse height property
    */
-  private parseStyle() {
+  private parseStyle(): void {
     const { style } = this.params.node;
     if (!style) {
       return;
@@ -219,7 +219,7 @@ export class VLIElement implements VElement {
     }
   }
 
-  private parseClass() {
+  private parseClass(): void {
     const { classes } = this.params.node;
     if (!classes) {
       return;

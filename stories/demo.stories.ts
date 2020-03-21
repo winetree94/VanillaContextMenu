@@ -1,4 +1,5 @@
 import { storiesOf } from '@storybook/html';
+import { action } from '@storybook/addon-actions';
 import '../src/styles/style.css';
 import { VanillaContext } from '../src/Container';
 
@@ -46,7 +47,8 @@ stories.add('intro', () => {
   const contextmenu = new VanillaContext(table, {
     nodes: [
       {
-        renderer: 'This is context menu',
+        renderer: '<i></i>Hello World',
+        onClick: params => action('click'),
         children: [
           {
             renderer: 'hello'
