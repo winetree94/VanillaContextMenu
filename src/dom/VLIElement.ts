@@ -30,11 +30,14 @@ export class VLIElement implements VElement {
     this.li.className = 'vanilla-context-li';
     this.params = params;
     this.parseRenderer();
-    this.parseItemClass();
+  }
 
-    this.parseStyle();
-    this.parseClass();
-    this.parseDisabled();
+  onAttached() {
+    this.parseItemClass();
+    this.parseItemStyle();
+    this.parseNodeClass();
+    this.parseNodeStyle();
+    this.parseNodeDisabled();
     this.setChild();
     this.setEvent();
   }
@@ -141,7 +144,8 @@ export class VLIElement implements VElement {
   }
 
   public openChild(): void {
-    const { top, left, width } = this.params.parent.ul.getBoundingClientRect();
+    const { left, width } = this.params.parent.ul.getBoundingClientRect();
+    const { top } = this.li.getBoundingClientRect();
     this.child?.show();
     this.child?.setLocation({ x: left + width - 1, y: top });
   }
@@ -171,10 +175,27 @@ export class VLIElement implements VElement {
     }
   }
 
+  private parseItemStyle(): void {
+    const { itemStyle } = this.params.context.options;
+    if (!itemStyle) {
+      return;
+    }
+
+    const style =
+      typeof itemStyle === 'function'
+        ? itemStyle({
+            api: this.params.context,
+            originEvent: this.params.e
+          })
+        : itemStyle;
+
+    Object.assign(this.li.style, style);
+  }
+
   /**
    * parse disabled property
    */
-  private parseDisabled(): void {
+  private parseNodeDisabled(): void {
     const { disabled } = this.params.node;
 
     /* if user not provide disabled property, will stop */
@@ -200,11 +221,12 @@ export class VLIElement implements VElement {
   /**
    * parse height property
    */
-  private parseStyle(): void {
+  private parseNodeStyle(): void {
     const { style } = this.params.node;
     if (!style) {
       return;
     }
+
     /* If user provided custom height */
     if (typeof style === 'function') {
       Object.assign(
@@ -219,7 +241,7 @@ export class VLIElement implements VElement {
     }
   }
 
-  private parseClass(): void {
+  private parseNodeClass(): void {
     const { classes } = this.params.node;
     if (!classes) {
       return;

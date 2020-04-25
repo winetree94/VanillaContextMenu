@@ -26,6 +26,10 @@ export class VUListElement implements VElement {
     this.parseGroupClass();
   }
 
+  onAttached(): void {
+    return;
+  }
+
   public getElement(): HTMLElement {
     return this.ul;
   }
@@ -41,6 +45,7 @@ export class VUListElement implements VElement {
       };
       const vLi = new VLIElement(params);
       this.getElement().appendChild(vLi.getElement());
+      setTimeout(vLi.onAttached.bind(vLi), 0);
       this.children.push(vLi);
     });
   }

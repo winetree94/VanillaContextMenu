@@ -5,5 +5,6 @@ export interface VElementParams {
 
 export interface VElement {
   getElement: () => HTMLElement;
+  onAttached: () => void;
   onDestroy: () => void;
 }
