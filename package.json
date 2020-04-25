@@ -10,9 +10,8 @@
   "scripts": {
     "debug:context": "webpack-dev-server --config webpack.dev.js",
     "debug:storybook": "start-storybook -p 8000",
-    "build": "npm run build:context && npm run build:storybook",
+    "debug:docsify": "docsify serve docs",
     "build:context": "webpack --config webpack.prod.js -p",
-    "build:storybook": "build-storybook -c .storybook -o docs",
     "test:lint": "eslint \"src/**/*.ts\""
   },
   "devDependencies": {
@@ -27,6 +26,7 @@
     "bootstrap": "^4.4.1",
     "css-loader": "^3.4.2",
     "docsify": "^4.11.2",
+    "docsify-cli": "^4.4.0",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
     "eslint-loader": "^3.0.3",

@@ -144,7 +144,8 @@ export class VLIElement implements VElement {
   }
 
   public openChild(): void {
-    const { top, left, width } = this.params.parent.ul.getBoundingClientRect();
+    const { left, width } = this.params.parent.ul.getBoundingClientRect();
+    const { top } = this.li.getBoundingClientRect();
     this.child?.show();
     this.child?.setLocation({ x: left + width - 1, y: top });
   }

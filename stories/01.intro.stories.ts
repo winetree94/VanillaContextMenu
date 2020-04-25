@@ -15,14 +15,10 @@ stories.add('what is', () => {
   const container = document.createElement('div');
   container.className = 'container-fluid';
   container.style.paddingTop = '20px';
-  container.innerHTML = `
+  container.innerHTML = /* html */ `
   <div class="jumbotron">
-  <h1>Pure context menu for modern web browser!</h1>
-  <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing
-  responsive, mobile-first projects on the web.</p>
+    <h1>pure browser context menu library for modern web browser</h1>
   </div>
-  <p>This is some text.</p>
-  <p>This is another text.</p>
   `;
   return container;
 });
