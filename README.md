@@ -1,3 +1,5 @@
+![CI](https://github.com/winetree94/VanillaContextMenu/workflows/CI/badge.svg?branch=master)
+
 # Pure Javascript Context Menu
 
 This is lightweight and zero dependencies pure javascript library for modern web browser.
