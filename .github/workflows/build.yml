@@ -26,10 +26,23 @@ jobs:
         node-version: '12'
 
     # Runs a single command using the runners shell
-    - name: Run a one-line script
+    - name: install dependencies
       run: npm install
 
     # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
+    - name: build
       run: |
         npm run build:context
+
+    # commit dist
+    - name: commit dist
+      uses: EndBug/add-and-commit@v2
+      with: # More info about the arguments on the action page
+        author_name: winetree94
+        author_email: winetree94@outlook.com
+        message: "build dist"
+        path: dist
+        pattern: "*" # Pattern that matches the files to commit
+        force: true # Whether to use the --force flag
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
