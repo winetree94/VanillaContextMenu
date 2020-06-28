@@ -9,7 +9,6 @@ import {
   isFunctionRenderer,
   isStringRenderer
 } from '../core/Renderer';
-import { Log } from '../misc/Log';
 
 export interface VLIElementParams extends VElementParams {
   context: VanillaContext;
@@ -32,7 +31,7 @@ export class VLIElement implements VElement {
     this.parseRenderer();
   }
 
-  onAttached() {
+  onAttached(): void {
     this.parseItemClass();
     this.parseItemStyle();
     this.parseNodeClass();

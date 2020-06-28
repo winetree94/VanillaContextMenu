@@ -8,6 +8,7 @@
   "homepage": "https://winetree94.github.io/VanillaContextMenu",
   "repository": "https://github.com/winetree94/VanillaContextMenu",
   "scripts": {
+    "debug": "concurrently -k -p \"[{name}]\" -n \"Context,Docs\" -c \"yellow.bold,cyan.bold\" \"npm run debug:context\" \"npm run debug:docsify\"",
     "debug:context": "webpack-dev-server --config webpack.dev.js",
     "debug:storybook": "start-storybook -p 8000",
     "debug:docsify": "docsify serve docs",
@@ -24,6 +25,7 @@
     "@typescript-eslint/parser": "^2.10.0",
     "babel-loader": "^8.0.6",
     "bootstrap": "^4.4.1",
+    "concurrently": "^5.2.0",
     "css-loader": "^3.4.2",
     "docsify": "^4.11.2",
     "docsify-cli": "^4.4.0",
@@ -48,5 +50,7 @@
     "webpack-dev-server": "^3.10.1",
     "webpack-merge": "^4.2.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/node": "^14.0.14"
+  }
 }
