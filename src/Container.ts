@@ -158,3 +158,5 @@ export class VanillaContext {
     };
   }
 }
+
+export default VanillaContext;
