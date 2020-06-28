@@ -13,7 +13,8 @@
     "debug:storybook": "start-storybook -p 8000",
     "debug:docsify": "docsify serve docs",
     "build:context": "webpack --config webpack.prod.js -p",
-    "test:lint": "eslint \"src/**/*.ts\""
+    "test:lint": "eslint \"src/**/*.ts\"",
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
