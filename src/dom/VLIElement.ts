@@ -209,7 +209,7 @@ export class VLIElement implements VElement {
     }
 
     /* if property type is boolean */
-    if (typeof disabled === 'boolean') {
+    if (disabled === true) {
       this.li.classList.add('disabled');
       /* if property type is function */
     } else if (
