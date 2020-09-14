@@ -142,13 +142,19 @@ export class VLIElement implements VElement {
     this.li.classList.remove('hover');
   }
 
+  /**
+   * open context children
+   */
   public openChild(): void {
     const { left, width } = this.params.parent.ul.getBoundingClientRect();
     const { top } = this.li.getBoundingClientRect();
     this.child?.show();
-    this.child?.setLocation({ x: left + width - 1, y: top });
+    this.child?.setLocation({ x: left + width - 1, y: top - 1 });
   }
 
+  /**
+   * hide context children
+   */
   public closeChild(): void {
     this.child?.hide();
   }
