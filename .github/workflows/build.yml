@@ -34,6 +34,8 @@ jobs:
       run: |
         npm run build:context
 
+    # Update package.json version
+
     # commit dist
     - name: commit dist
       uses: EndBug/add-and-commit@v2
@@ -50,7 +52,6 @@ jobs:
   publish:
     needs: build
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v1
@@ -64,7 +65,6 @@ jobs:
   create-release:
     needs: build
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/checkout@master
       - uses: Roang-zero1/github-create-release-action@master
