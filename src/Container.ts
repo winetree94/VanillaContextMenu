@@ -58,6 +58,9 @@ export class VanillaContext {
   public context: VUListElement | undefined;
 
   constructor(element: HTMLElement, options: VanillaContextOptions) {
+    if (!element) {
+      throw new Error('element is requirement parameter');
+    }
     this.element = element;
     this.options = Object.assign(defaultContextOptions, options);
     this.events = new VEventContainer();

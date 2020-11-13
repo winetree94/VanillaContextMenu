@@ -1,9 +1,9 @@
 {
   "name": "vanilla-context",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Pure javascript context menu library",
   "main": "dist/Container.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/Container.d.ts",
   "author": "winetree94",
   "license": "MIT",
   "homepage": "https://winetree94.github.io/VanillaContextMenu",
