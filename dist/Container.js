@@ -9,6 +9,9 @@ exports.defaultContextOptions = {
 };
 var VanillaContext = /** @class */ (function () {
     function VanillaContext(element, options) {
+        if (!element) {
+            throw new Error('element is requirement parameter');
+        }
         this.element = element;
         this.options = Object.assign(exports.defaultContextOptions, options);
         this.events = new VEvent_1.VEventContainer();
