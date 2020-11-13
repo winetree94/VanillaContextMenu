@@ -1,15 +1,16 @@
 {
   "name": "vanilla-context",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Pure javascript context menu library",
-  "main": "src/Container.ts",
+  "main": "dist/Container.js",
+  "types": "src/index.d.ts",
   "author": "winetree94",
   "license": "MIT",
   "homepage": "https://winetree94.github.io/VanillaContextMenu",
   "repository": "https://github.com/winetree94/VanillaContextMenu",
   "scripts": {
     "debug:context": "webpack-dev-server --config webpack.dev.js",
-    "build:context": "webpack --config webpack.prod.js -p",
+    "build:context": "tsc && webpack --config webpack.prod.js -p",
     "test:lint": "eslint \"src/**/*.ts\"",
     "postversion": "git push && git push --tags"
   },
