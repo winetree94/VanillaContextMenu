@@ -8,28 +8,18 @@
   "homepage": "https://winetree94.github.io/VanillaContextMenu",
   "repository": "https://github.com/winetree94/VanillaContextMenu",
   "scripts": {
-    "debug": "concurrently -k -p \"[{name}]\" -n \"Context,Docs\" -c \"yellow.bold,cyan.bold\" \"npm run debug:context\" \"npm run debug:docsify\"",
     "debug:context": "webpack-dev-server --config webpack.dev.js",
-    "debug:storybook": "start-storybook -p 8000",
-    "debug:docsify": "docsify serve docs",
     "build:context": "webpack --config webpack.prod.js -p",
     "test:lint": "eslint \"src/**/*.ts\"",
     "postversion": "git push && git push --tags"
   },
   "devDependencies": {
+    "@types/node": "^14.0.14",
     "@babel/core": "^7.8.7",
-    "@popperjs/core": "^2.1.1",
-    "@storybook/addon-actions": "^5.3.9",
-    "@storybook/html": "^5.3.14",
-    "@storybook/preset-typescript": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
     "babel-loader": "^8.0.6",
-    "bootstrap": "^4.4.1",
-    "concurrently": "^5.2.0",
     "css-loader": "^3.4.2",
-    "docsify": "^4.11.2",
-    "docsify-cli": "^4.4.0",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
     "eslint-loader": "^3.0.3",
@@ -37,11 +27,9 @@
     "eslint-plugin-prettier": "^3.1.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
-    "jquery": "^3.4.1",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "^1.19.1",
-    "purecss": "^1.0.1",
     "style-loader": "^1.1.2",
     "terser-webpack-plugin": "^2.3.2",
     "ts-loader": "^6.2.1",
@@ -50,8 +38,5 @@
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1",
     "webpack-merge": "^4.2.2"
-  },
-  "dependencies": {
-    "@types/node": "^14.0.14"
   }
 }

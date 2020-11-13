@@ -39,7 +39,7 @@ export interface VanillaContextOptions {
   nodes: ContextNode[] | ((params: ContextNodeParams) => ContextNode[]);
 }
 
-const defaultContextOptions: VanillaContextOptions = {
+export const defaultContextOptions: VanillaContextOptions = {
   autoClose: true,
   debug: true,
   nodes: []

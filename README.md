@@ -4,13 +4,33 @@
 
 This is lightweight and zero dependencies pure javascript library for modern web browser.
 
-### Basic usage
+---
+
+#### in browser
+
+```html
+<!-- using cdn -->
+<link type="stylesheet" src="https://unpkg.com/vanilla-context@1.0.7/dist/vanilla-context.min.js">
+<script src="https://unpkg.com/vanilla-context@1.0.7/dist/vanilla-context.min.js"></script>
+```
 
 ```javascript
 const table = document.getElementById('table');
 const options = {...};
 const context = new VanillaContext(table, options);
 ```
+
+#### in node.js
+
+```typescript
+import { VanillaContext } from 'vanilla-context';
+
+const table = document.getElementById('table');
+const options = {...};
+const context = new VanillaContext(table, options);
+```
+
+---
 
 ### Option interface
 

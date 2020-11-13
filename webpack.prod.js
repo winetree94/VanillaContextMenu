@@ -29,9 +29,6 @@ module.exports = {
     path: path.join(__dirname, './dist'),
     filename: 'vanilla-context.min.js'
   },
-  devServer: {
-    port: 9009
-  },
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})]
