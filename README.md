@@ -10,8 +10,8 @@ This is lightweight and zero dependencies pure javascript library for modern web
 
 ```html
 <!-- using cdn -->
-<link type="stylesheet" src="https://unpkg.com/vanilla-context@1.0.7/dist/vanilla-context.min.js">
-<script src="https://unpkg.com/vanilla-context@1.0.7/dist/vanilla-context.min.js"></script>
+<link type="stylesheet" src="https://unpkg.com/vanilla-context@1.0.10/dist/vanilla-context.min.js">
+<script src="https://unpkg.com/vanilla-context@1.0.10/dist/vanilla-context.min.js"></script>
 ```
 
 ```javascript
