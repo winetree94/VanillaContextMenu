@@ -3,7 +3,7 @@
   "version": "1.0.8",
   "description": "Pure javascript context menu library",
   "main": "dist/Container.js",
-  "types": "src/index.d.ts",
+  "types": "dist/index.d.ts",
   "author": "winetree94",
   "license": "MIT",
   "homepage": "https://winetree94.github.io/VanillaContextMenu",
