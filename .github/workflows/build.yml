@@ -35,6 +35,8 @@ jobs:
         npm run build:context
 
     # Update package.json version
+    - name: Update version in package.json
+      uses: maks-stupak/gh-action-bump-version@v7.1.5
 
     # commit dist
     - name: commit dist
