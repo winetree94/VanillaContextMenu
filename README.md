@@ -24,6 +24,7 @@ const context = new VanillaContext(table, options);
 
 ```typescript
 import { VanillaContext } from 'vanilla-context';
+import 'vanilla-context/dist/vanilla-context.min.css';
 
 const table = document.getElementById('table');
 const options = {...};
