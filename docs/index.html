@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Vanilla Context Menu</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/codemirror.min.css" />
   <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css">
   <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css">
 <link href="vanilla-context.min.css" rel="stylesheet"><script type="text/javascript" src="vanilla-context.min.js"></script></head>
@@ -18,22 +20,14 @@
     </div>
   </div>
 
-  <div class="splash-container">
-    <div class="splash" style="max-width: 800px; margin: auto auto; height: 500px;">
-      <h1 class="splash-head">Big Bold Text</h1>
-      <p class="splash-subhead">
-        Instruction
-      </p>
-      <p>
-        <a href="http://purecss.io" class="pure-button pure-button-primary">Get Started</a>
-      </p>
-    </div>
-  </div>
-
   <div class="content-wrapper" style="max-width:800px; margin: auto auto;">
-    <div class="content">
+    <div class="content" style="margin-top: 100px;">
 
-      <table id="basic_table" class="pure-table pure-table-bordered">
+      <div>
+        Live test
+      </div>
+
+      <table id="basic_table" class="pure-table pure-table-bordered" style="margin-top: 20px;">
         <thead>
           <tr>
             <th>#</th>
@@ -66,133 +60,100 @@
           </tr>
         </tbody>
       </table>
+      <br>
+      <div>
+        Run your Code
+      </div>
+      <br>
+      <div style="border: black 1px solid;">
+        <textarea id="editor" style="height: 200px">
+const basicTableBody = document.getElementById('basic_table_body');
+const basicTableContext = new VanillaContext(basicTableBody, {
+  autoClose: false,
+  nodes: [{
+    renderer: (params) => {
+      const td = params.originEvent.target.closest('td');
+      return '<b>' + td.textContent + '</b>';
+    },
+    disabled: true,
+    style: {
+      height: '60px'
+    }
+  }, {
+    renderer: 'remove row',
+    onClick: ({ api, originEvent }) => {
+      const row = originEvent.target.closest('tr');
+      if (row) {
+        row.parentElement.removeChild(row);
+      }
+      api.close();
+    },
+  }, {
+    renderer: '<bold>굵게</bold>',
+    onClick: (e) => {
+      console.log(e);
+    },
+    children: [{
+      renderer: '할로',
+      onClick: (e) => {
+        console.log(e);
+      }
+    }, {
+      renderer: '<bold>굵게</bold>',
+      onClick: (e) => {
+        console.log(e);
+      },
+      children: [{
+        renderer: (e) => {
+          const p = document.createElement('p');
+          p.innerHTML = 'ㅋㅋㅋㅋ';
+          return p;
+        },
+        onClick: (e) => {
+          console.log(e);
+        }
+      }, {
+        renderer: '<bold>굵게</bold>',
+        onClick: (e) => {
+          console.log(e);
+        },
+        children: [{
+          renderer: '할로',
+          onClick: (e) => {
+            console.log(e);
+          }
+        }, {
+          renderer: '<bold>굵게</bold>',
+          onClick: (e) => {
+            console.log(e);
+          }
+        }]
+      }]
+    }]
+  }]
+});
+        </textarea>
+        <script>
+          var textarea = document.getElementById('editor');
+          var editor = CodeMirror.fromTextArea(textarea, {
+            lineNumbers: true,
+            lineWrapping: true,
+            mode: "javascript",
+            val: textarea.value
+          });
 
-      <script>
-        const basicTableBody = document.getElementById('basic_table_body');
-        const basicTableContext = new VanillaContext(basicTableBody, {
-          autoClose: false,
-          nodes: [{
-            renderer: (params) => {
-              const td = params.originEvent.target.closest('td');
-              return '<b>' + td.textContent + '</b>';
-            },
-            disabled: true,
-            style: {
-              height: '60px'
-            }
-          }, {
-            renderer: 'remove row',
-            onClick: ({ api, originEvent }) => {
-              const row = originEvent.target.closest('tr');
-              if (row) {
-                row.parentElement.removeChild(row);
-              }
-              api.close();
-            },
-          }, {
-            renderer: '<bold>굵게</bold>',
-            onClick: (e) => {
-              console.log(e);
-            },
-            children: [{
-              renderer: '할로',
-              onClick: (e) => {
-                console.log(e);
-              }
-            }, {
-              renderer: '<bold>굵게</bold>',
-              onClick: (e) => {
-                console.log(e);
-              },
-              children: [{
-                renderer: (e) => {
-                  const p = document.createElement('p');
-                  p.innerHTML = 'ㅋㅋㅋㅋ';
-                  return p;
-                },
-                onClick: (e) => {
-                  console.log(e);
-                }
-              }, {
-                renderer: '<bold>굵게</bold>',
-                onClick: (e) => {
-                  console.log(e);
-                },
-                children: [{
-                  renderer: '할로',
-                  onClick: (e) => {
-                    console.log(e);
-                  }
-                }, {
-                  renderer: '<bold>굵게</bold>',
-                  onClick: (e) => {
-                    console.log(e);
-                  }
-                }]
-              }]
-            }]
-          }]
-        });
-      </script>
+          eval(editor.getValue());
+        </script>
+      </div>
 
-      <br><br>
-
-
-      <table id="basic_table2" class="pure-table pure-table-bordered">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Year</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Honda</td>
-            <td>Accord</td>
-            <td>2009</td>
-          </tr>
-
-          <tr>
-            <td>2</td>
-            <td>Toyota</td>
-            <td>Camry</td>
-            <td>2012</td>
-          </tr>
-
-          <tr>
-            <td>3</td>
-            <td>Hyundai</td>
-            <td>Elantra</td>
-            <td>2010</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <script>
-      // const basic_table2 = document.getElementById('basic_table2');
-      // const basicTableContext2 = new VanillaContext(basic_table2, (e) => {
-      //   return [
-      //     {renderer: () => ('add')},
-      //     {
-      //       renderer: () => ('delete'),
-      //       onClick: (e) => {
-      //         if (e.target) {
-      //           console.log(e.target);
-      //         }
-      //       }
-      //     },
-      //     {
-      //       renderer: () => ('<div>others...</div>'),
-      //       children: [{
-      //         renderer: () => ('download')
-      //       }]
-      //     }]
-      // });
-      </script>
+      <div style="margin-top: 20px;">
+        <script>
+          function rerun() {
+            eval(editor.getValue());
+          }
+        </script>
+        <button class="pure-button pure-button-primary" onclick="rerun()">Rerun</button>
+      </div>
 
     </div>
   </div>
