@@ -1,51 +1,30 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    # Checkout
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
         node-version: '12'
 
-    # Runs a single command using the runners shell
+    # Install Dependencies
     - name: install dependencies
       run: npm install
 
-    # Runs a set of commands using the runners shell
+    # Build
     - name: build
       run: |
         npm run build:context
 
-    # commit dist
-    - name: commit dist
-      uses: EndBug/add-and-commit@v2
-      with: # More info about the arguments on the action page
-        author_name: winetree94
-        author_email: winetree94@outlook.com
-        message: "build dist"
-        path: dist
-        pattern: "*" # Pattern that matches the files to commit
-        force: true # Whether to use the --force flag
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
+    # Publish
     - uses: JS-DevTools/npm-publish@v1
       with:
         token: ${{ secrets.NPM_TOKEN }}
