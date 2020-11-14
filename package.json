@@ -11,8 +11,7 @@
   "scripts": {
     "debug:context": "webpack-dev-server --config webpack.dev.js",
     "build:context": "tsc && webpack --config webpack.prod.js -p",
-    "test:lint": "eslint \"src/**/*.ts\"",
-    "postversion": "git push && git push --tags"
+    "test:lint": "eslint \"src/**/*.ts\""
   },
   "devDependencies": {
     "@types/node": "^14.0.14",
