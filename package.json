@@ -10,7 +10,7 @@
   "repository": "https://github.com/winetree94/VanillaContextMenu",
   "scripts": {
     "debug:context": "webpack-dev-server --config webpack.dev.js",
-    "build:context": "tsc && webpack --config webpack.prod.js -p && copy:docs",
+    "build:context": "tsc && webpack --config webpack.prod.js -p && npm run copy:docs",
     "copy:docs": "rm -rf docs && mkdir docs && cp ./dist/index.html ./docs/index.html && cp ./dist/vanilla-context.min.js ./docs/vanilla-context.min.js && cp ./dist/vanilla-context.min.css ./docs/vanilla-context.min.css",
     "test:lint": "eslint \"src/**/*.ts\""
   },
