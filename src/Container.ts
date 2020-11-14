@@ -119,7 +119,9 @@ export class VanillaContext {
     /* attach context root to element and reflect mouse location on the ul element */
     this.element.appendChild(this.context.getElement());
     /* get Mouse position */
-    const { x, y } = VanillaContext.getMousePosition(e);
+    const { x, y } = VanillaContext.getMousePosition(
+      e as HTMLElementEventMap['contextmenu']
+    );
     /* this will showing context and locate correct position */
     this.context.show();
     this.context.setLocation({ x, y });
@@ -137,27 +139,12 @@ export class VanillaContext {
     }
   }
 
-  private static getMousePosition(event: Event): { x: number; y: number } {
-    const e = event as HTMLElementEventMap['contextmenu'];
-    let posx = 0;
-    let posy = 0;
-
-    if (e.pageX || e.pageY) {
-      posx = e.pageX;
-      posy = e.pageY;
-    } else if (e.clientX || e.clientY) {
-      posx =
-        e.clientX +
-        document.body.scrollLeft +
-        document.documentElement.scrollLeft;
-      posy =
-        e.clientY +
-        document.body.scrollTop +
-        document.documentElement.scrollTop;
-    }
+  private static getMousePosition(
+    event: HTMLElementEventMap['contextmenu']
+  ): { x: number; y: number } {
     return {
-      x: posx,
-      y: posy
+      x: event.clientX,
+      y: event.clientY
     };
   }
 }
