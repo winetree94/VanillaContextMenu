@@ -1,6 +1,6 @@
 {
   "name": "vanilla-context",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Pure javascript context menu library",
   "main": "dist/Container.js",
   "types": "dist/Container.d.ts",
